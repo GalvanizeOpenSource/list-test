@@ -24,8 +24,8 @@ describe "Editing todo lists" do
     todo_list.reload
 
     expect(page).to have_content("Todo list was successfully updated")
-    expect(todo_list.title).to eq("New Title")
+    expect(todo_list.title).to eq("New title")
     expect(todo_list.description).to eq("New description")
   end
-  
+
 end
