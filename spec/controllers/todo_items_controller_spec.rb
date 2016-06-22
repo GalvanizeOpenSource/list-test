@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe TodoItemsController do
-  let(:todo_item) {TodoItem.create(content: "Get milk and eggs")}
-  let(:todo_list) {TodoList.create(title: "My Title", description: "This is my test list")}
+  let(:todo_item) { TodoItem.create(content: "Get milk and eggs") }
+  let(:todo_list) { TodoList.create(title: "My Title", description: "This is my test list") }
+
   before() do
     todo_list.todo_items << todo_item
   end
@@ -63,6 +64,19 @@ describe TodoItemsController do
     it 'should update the specified item' do
       put :update, todo_list_id: todo_list.id, id: todo_item.id, todo_item: {content: "New content"}
       expect(todo_item.reload.content).to eq "New content"
+    end
+  end
+
+  describe "#create" do
+    it 'should create a new todo item for the specified list' do
+      post :create, todo_list_id: todo_list.id, todo_item: { content: "This is my new item" }
+      expect(todo_list.todo_items.length).to eq(2)
+      expect(todo_list.todo_items[1].content).to eq("This is my new item")
+    end
+
+    it 'should redirect to new_todo_list_path if todo_list is not found' do
+      post :create, todo_list_id: todo_list.id + 1, todo_item: { content: "This is my new item" }
+      expect(response).to redirect_to(new_todo_list_path)
     end
   end
 end
