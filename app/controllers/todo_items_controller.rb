@@ -18,7 +18,7 @@ class TodoItemsController < ApplicationController
 
   def create
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_list = TodoList.find(id: params[:todo_list_id])
       @todo_item = @todo_list.todo_items.new(todo_item_params)
       if @todo_item.save
         flash[:success] = "Added todo list item."
