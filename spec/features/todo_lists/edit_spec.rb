@@ -16,6 +16,7 @@ describe "Editing todo lists" do
     fill_in "Description", with: options[:description]
     click_button "Update Todo list"
   end
+
   it "updates a todo list successfully with the correct information" do
     update_todo_list  todo_list: todo_list,
                       title: "New title",
@@ -28,4 +29,15 @@ describe "Editing todo lists" do
     expect(todo_list.description).to eq("New description")
   end
 
+  it "allows a user to add a new item to a todo list from index page", js: true do
+    visit "/todo_lists"
+
+    within "#todo_list_#{todo_list.id}" do
+      find('.add-item', text: 'Add item').click
+    end
+
+    expect(page).to have_content("Add a new todo item!")
+
+    #TODO: save the new item
+  end
 end
