@@ -62,6 +62,13 @@ GEM
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
+    jasmine (2.3.1)
+      jasmine-core (~> 2.3)
+      phantomjs
+      rack (>= 1.2.1)
+      rake
+    jasmine-core (2.3.4)
+    jasmine-jquery-rails (2.0.3)
     jbuilder (2.5.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -82,6 +89,7 @@ GEM
     multi_json (1.12.1)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    phantomjs (1.9.8.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -172,6 +180,8 @@ DEPENDENCIES
   byebug
   capybara (~> 2.1.0)
   coffee-rails (~> 4.1.0)
+  jasmine
+  jasmine-jquery-rails
   jbuilder (~> 2.0)
   jquery-rails
   rails (= 4.2.4)
