@@ -1,28 +1,78 @@
-== README
+== Galvanize Todo
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a simple todo list application. There is are todo lists, and todo items associated with those lists.
+It is a Ruby on Rails application, and it uses Capybara and Jasmine for it's testing suite.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Initial Setup:
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+### DB
+    Most machines come with SQLite built in, but if you don't, install it. You'll need SQLite3.
+    https://www.sqlite.org/
+
+### Install Homebrew
+    `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+
+    `$ brew install gpg
+
+### Install RVM:
+
+    `$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3`
+
+        `$ \curl -sSL https://get.rvm.io | bash -s stable`
+
+    if rvm has an error about the dotfiles
+
+    `$ rvm get stable --auto-dotfiles`
+
+    Run source rvm command. (command is specified in output of previous command)
+
+### Install ruby:
+
+	$ rvm install 2.2.1
+
+### Install rails:
+
+	$ gem install rails
+
+
+## Project Setup
+
+
+### Clone the project locally
+
+    $ git clone git@github.com:Galvanize-IT/list-test.git
+
+### Run migrations
+
+    $ rake db:migrate
+
+## Run the app
+
+    `rails server`
+    This command will start the application on port 3000. Visiting 'localhost:3000' in a web broswer
+    will run the application.
+
+
+## Tests
+
+
+### Capybara Tests
+
+    `$ rspec`
+    This will run all tests.
+
+    `$ rspec spec/controllers`
+    This will run all tests in the controllers file.
+
+    `$ rspec spec/controllers/todo_items_controller_spec`
+    This will run only this test file.
+
+    `$ rspec spec/controllers/todo_items_controller_spec:5`
+    This will run only the test block that line 5 is contained within.
+
+### Jasmine Tests
+
+    `rake jasmine`
+    This will start the jasmine server
+    Visiting 'localhost:8888' in a web browser will run the jasmine tests.
