@@ -22,7 +22,7 @@ Make failing tests pass
 ### Implement the following feature:
 Add the ability to delete a todo item from the todo_item#index page.  
 
-Add a link in the todo item row that when the user clicks on it will open a confirmation modal. 
+Add a link in the todo item row that when the user clicks on it, it will open a confirmation modal.
 
 If the user confirms the decision to delete the specified todo item the todo item should be deleted and the user should be redirect the user to the root path.  They should see a flash message saying "Your todo item was successfully removed".  If the last todo item is deleted from the todo list, delete the todo list as well.  The flash message in that case should say "The last todo item was successfully removed and your todo list was deleted."
 

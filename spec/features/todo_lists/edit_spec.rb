@@ -29,7 +29,8 @@ describe "Editing todo lists" do
     expect(todo_list.description).to eq("New description")
   end
 
-  it "allows a user to add a new item to a todo list from index page", js: true do
+  it "allows a user to add a new item to a todo list from index page" do
+
     visit "/todo_lists"
 
     within "#todo_list_#{todo_list.id}" do
