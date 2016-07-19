@@ -1,7 +1,7 @@
 == Galvanize Todo
 
 This is a simple todo list application. There is are todo lists, and todo items associated with those lists.
-It is a Ruby on Rails application, and it uses Capybara and Jasmine for it's testing suite.
+It is a Ruby on Rails application, and it uses Capybara and Jasmine for its testing suite.
 
 ## Initial Setup:
 
