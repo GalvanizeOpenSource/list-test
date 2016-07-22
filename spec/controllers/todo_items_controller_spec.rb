@@ -63,7 +63,7 @@ describe TodoItemsController do
 
     it 'should update the specified item' do
       put :update, todo_list_id: todo_list.id, id: todo_item.id, todo_item: {content: "New content"}
-      expect(todo_item.reload.content).to eq "New content"
+      expect(todo_item.reload.content).to eq("New content")
     end
   end
 

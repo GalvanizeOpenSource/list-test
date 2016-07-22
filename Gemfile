@@ -13,8 +13,6 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 
-
-
 group :development, :test do
   gem 'byebug'
 end
@@ -28,10 +26,12 @@ end
 group :development, :test do
   gem 'jasmine'
   gem 'jasmine-jquery-rails'
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-activemodel-mocks'
+
 end
 
 group :test do
-  gem 'capybara', '~> 2.1.0'
+  gem 'capybara', '~> 2.7.1'
   gem 'shoulda-matchers', '~> 3.1.1'
 end
