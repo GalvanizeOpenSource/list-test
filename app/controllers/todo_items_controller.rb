@@ -58,6 +58,21 @@ class TodoItemsController < ApplicationController
     end
   end
 
+  def destroy
+    begin
+      @todo_item = TodoItem.find(params[:id])
+      @todo_list = @todo_item.todo_list
+
+      @todo_item.destroy
+
+      flash[:success] = "Your todo item was successfully removed."
+      redirect_to todo_lists_path
+    rescue ActiveRecord::RecordNotFound
+      flash[:error] = "There was a problem deleting that item."
+      redirect_to new_todo_list_path
+    end
+  end
+
   def url_options
     {todo_list_id: params[:todo_list_id]}.merge(super)
   end
