@@ -88,7 +88,7 @@ class TodoItemsController < ApplicationController
   private
 
   def todo_item_params
-    params[:todo_item].permit(:content)
+    params[:todo_item].permit(:content, :due_at)
   end
 
 end
