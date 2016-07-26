@@ -65,11 +65,16 @@ class TodoItemsController < ApplicationController
 
       @todo_item.destroy
 
-      flash[:success] = "Your todo item was successfully removed."
-      redirect_to todo_lists_path
-    rescue ActiveRecord::RecordNotFound
-      flash[:error] = "There was a problem deleting that item."
-      redirect_to new_todo_list_path
+      if @todo_list.reload.todo_items.length == 0
+        @todo_list.destroy
+        flash[:success] = "The last todo item was successfully removed and your todo list was deleted."
+      else
+        flash[:success] = "Your todo item was successfully removed."
+      end
+
+      redirect_to root_path
+    rescue
+      flash[:error] = "Sorry, there was a problem deleting the todo item."
     end
   end
 
