@@ -60,8 +60,8 @@ class TodoItemsController < ApplicationController
 
   def destroy
     begin
+      @todo_list = TodoList.find(params[:todo_list_id])
       @todo_item = TodoItem.find(params[:id])
-      @todo_list = @todo_item.todo_list
 
       @todo_item.destroy
 
@@ -75,6 +75,7 @@ class TodoItemsController < ApplicationController
       redirect_to root_path
     rescue
       flash[:error] = "Sorry, there was a problem deleting the todo item."
+      redirect_to todo_list_todo_items_path(:todo_list_id => @todo_list.id)
     end
   end
 
