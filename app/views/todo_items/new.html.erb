@@ -17,9 +17,7 @@
     <br/><br/>
 
     <%= form.label :due_at %>
-    <% Time.use_zone("Pacific Time (US & Canada)") do %>
-      <%= datetime_select(:todo_item, :due_at) %>
-    <% end %>
+    <%= datetime_select(:todo_item, :due_at) %>
 
     <br/><br/>
 
