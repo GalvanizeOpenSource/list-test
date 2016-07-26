@@ -10,7 +10,18 @@
       </ul>
     </div>
     <% end %>
-  <%= form.label :content %>
-  <%= form.text_field :content %>
-  <%= form.submit "Save" %>
+
+    <%= form.label :content %>
+    <%= form.text_field :content %>
+
+    <br/><br/>
+
+    <%= form.label :due_at %>
+    <% Time.use_zone("Pacific Time (US & Canada)") do %>
+      <%= datetime_select(:todo_item, :due_at) %>
+    <% end %>
+
+    <br/><br/>
+
+    <%= form.submit "Save" %>
 <% end %>
