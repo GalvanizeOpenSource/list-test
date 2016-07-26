@@ -122,6 +122,10 @@ GEM
     rake (11.1.2)
     rdoc (4.2.2)
       json (~> 1.4)
+    rspec-activemodel-mocks (1.0.3)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      rspec-mocks (>= 2.99, < 4.0)
     rspec-core (3.5.1)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
@@ -189,6 +193,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   rails (= 4.2.4)
+  rspec-activemodel-mocks
   rspec-rails (~> 3.5)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
