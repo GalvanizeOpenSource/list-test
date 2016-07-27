@@ -9,7 +9,7 @@ $(document).ready(function(){
   });
 
   $('button.complete').click(function(){
-    var button = $(this);
+    var button = $(this)
     var list_id = $('ul').attr('id').replace('todo_list_','');
     var item_id = button.val();
     var item = $('#todo_item_'+item_id);
@@ -42,21 +42,6 @@ $(document).ready(function(){
 var startTimers = function() {
   var todoItems = $('p.due');
 
-  for (i=0;i<todoItems.length;i++) {
-    var item = todoItems.eq(i);
-    var itemId = item.attr('id');
-    var itemContent = item.attr('value');
-    var dueTimeString = item.text();
-
-    var count = calculateTimeDiffInSeconds(dueTimeString);
-
-    if (count > 0) {
-      console.log('start');
-      var counter = setInterval(popupTimer, 1000);
-    }
-  };
-
-
   var popupTimer = function(itemContent, itemId) {
     count -= 1;
 
@@ -71,8 +56,20 @@ var startTimers = function() {
   var calculateTimeDiffInSeconds = function(dueTimeString) {
     var now = Date.now();
     var due = Date.parse(dueTimeString);
-    var diff = dueTimeString - Date.now();
-
+    var diff = due - Date.now();
     return diff;
   }
+
+  for (var i=0;i<todoItems.length;i++) {
+    var item = todoItems.eq(i);
+    var itemId = item.attr('id');
+    var itemContent = item.attr('value');
+    var dueTimeString = item.text();
+
+    var count = calculateTimeDiffInSeconds(dueTimeString);
+    if (count > 0) {
+      console.log('start');
+      var counter = setInterval(popupTimer, 1000);
+    }
+  };
 };
