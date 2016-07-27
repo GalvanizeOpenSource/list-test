@@ -13,7 +13,7 @@ $(document).ready(function(){
     var list_id = $('ul').attr('id').replace('todo_list_','');
     var item_id = button.val().replace('due_','');
     var item = $('#todo_item_'+item_id);
-    var item_button_selector = 'btn_' + item_id;
+    var item_button_selector = '#btn_' + item_id;
     var url = '/todo_lists/'+list_id+'/todo_items/'+item_id;
 
     $.ajax({
@@ -25,6 +25,8 @@ $(document).ready(function(){
       dataType: "json"
     }).done(function(data) {
       if (data['success']) {
+        console.log('success');
+        debugger
         item.addClass('done');
         $(item_button_selector).replaceWith('Done!');
         hideModal();
@@ -59,7 +61,7 @@ var startTimers = function() {
       count -= 1;
 
       if (count <= 600) {
-        clearInterval(count);
+        clearInterval(timer);
         $('.modal-body p').text(itemContent);
         $('.modal-footer button.complete').val(itemId);
         $("#myModal").modal();
@@ -90,7 +92,7 @@ var startTimers = function() {
 
     if (count > 0 && liClass != 'done') {
       console.log('start');
-      setInterval(popupTimer(itemContent, itemId, count), 1000);
+      var timer = setInterval(popupTimer(itemContent, itemId, count), 1000);
     }
   };
 };
