@@ -7,4 +7,8 @@ $(document).ready(function(){
   $(document).on('click', '.close', function(){
     $('#openModal').removeClass('show');
   });
+
+  $('button').click(function(){
+    $(this).css('background-color','#E0EEE0');
+  });
 });
