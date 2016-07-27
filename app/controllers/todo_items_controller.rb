@@ -47,14 +47,37 @@ class TodoItemsController < ApplicationController
       @todo_item = @todo_list.todo_items.find(params[:id])
 
       if @todo_item.update_attributes(todo_item_params)
-        flash[:success] = "Saved todo list item."
-        redirect_to todo_list_todo_items_path
+        respond_to do |format|
+          format.html{
+            flash[:success] = "Saved todo list item."
+            redirect_to todo_list_todo_items_path
+          }
+          format.json{
+            render json: {success: true}
+          }
+        end
       else
-        flash[:error] = "That todo item could not be saved."
-        render action: :edit
+        respond_to do |format|
+          format.html{
+            flash[:error] = "That todo item could not be saved."
+            render action: :edit
+          }
+          format.json {
+            render json: {error: 'Sorry, we could not mark your todo item as done.'}
+          }
+        end
       end
     rescue ActiveRecord::RecordNotFound
-      redirect_to new_todo_list_path
+      respond_to do |format|
+          format.html{
+            flash[:error] = "That todo item could not be saved."
+            redirect_to new_todo_list_path
+          }
+          format.json {
+            render json: {error: 'Sorry, we could not mark your todo item as done.'}
+          }
+        end
+
     end
   end
 
