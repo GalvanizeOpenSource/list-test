@@ -36,6 +36,12 @@ $(document).ready(function(){
     });
   });
 
+  $('button.dismiss').click(function(){
+    $('#myModal').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+  })
+
   startTimers();
 });
 
