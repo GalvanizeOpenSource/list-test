@@ -9,6 +9,7 @@ $(document).ready(function(){
   });
 
   $('button').click(function(){
-    $(this).css('background-color','#E0EEE0');
+    $(this).closest('li').css('background-color', '#E0EEE0');
+    $(this).replaceWith('Done!');
   });
 });
