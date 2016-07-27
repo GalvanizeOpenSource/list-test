@@ -42,14 +42,17 @@ $(document).ready(function(){
 var startTimers = function() {
   var todoItems = $('p.due');
 
-  var popupTimer = function(itemContent, itemId) {
-    count -= 1;
+  var popupTimer = function(itemContent, itemId, count) {
 
-    if (count <= 600) {
-      clearInterval(counter);
-      $('.modal-body p').text(itemContent);
-      $('.modal-footer button.complete').val(itemId);
-      $("#myModal").modal();
+    return function() {
+      count -= 1;
+
+      if (count <= 600) {
+        clearInterval(count);
+        $('.modal-body p').text(itemContent);
+        $('.modal-footer button.complete').val(itemId);
+        $("#myModal").modal();
+      }
     }
   }
 
@@ -57,7 +60,7 @@ var startTimers = function() {
     var now = Date.now();
     var due = Date.parse(dueTimeString);
     var diff = due - Date.now();
-    return diff;
+    return diff/1000;
   }
 
   for (var i=0;i<todoItems.length;i++) {
@@ -65,11 +68,11 @@ var startTimers = function() {
     var itemId = item.attr('id');
     var itemContent = item.attr('value');
     var dueTimeString = item.text();
-
     var count = calculateTimeDiffInSeconds(dueTimeString);
+
     if (count > 0) {
       console.log('start');
-      var counter = setInterval(popupTimer, 1000);
+      setInterval(popupTimer(itemContent, itemId, count), 1000);
     }
   };
 };
