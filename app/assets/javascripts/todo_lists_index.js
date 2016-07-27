@@ -35,4 +35,44 @@ $(document).ready(function(){
       console.log(error);
     });
   });
+
+  startTimers();
 });
+
+var startTimers = function() {
+  var todoItems = $('p.due');
+
+  for (i=0;i<todoItems.length;i++) {
+    var item = todoItems.eq(i);
+    var itemId = item.attr('id');
+    var itemContent = item.attr('value');
+    var dueTimeString = item.text();
+
+    var count = calculateTimeDiffInSeconds(dueTimeString);
+
+    if (count > 0) {
+      console.log('start');
+      var counter = setInterval(popupTimer, 1000);
+    }
+  };
+
+
+  var popupTimer = function(itemContent, itemId) {
+    count -= 1;
+
+    if (count <= 600) {
+      clearInterval(counter);
+      $('.modal-body p').text(itemContent);
+      $('.modal-footer button.complete').val(itemId);
+      $("#myModal").modal();
+    }
+  }
+
+  var calculateTimeDiffInSeconds = function(dueTimeString) {
+    var now = Date.now();
+    var due = Date.parse(dueTimeString);
+    var diff = dueTimeString - Date.now();
+
+    return diff;
+  }
+};
