@@ -2,6 +2,10 @@ class TodoItemsController < ApplicationController
   def index
     begin
       @todo_list = TodoList.find(params[:todo_list_id])
+      not_null_items = @todo_list.todo_items.where('due_at IS NOT NULL').order('due_at ASC')
+      null_items = @todo_list.todo_items.where('due_at IS NULL').order('content')
+      @todo_items = not_null_items + null_items
+
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
     end
@@ -47,14 +51,37 @@ class TodoItemsController < ApplicationController
       @todo_item = @todo_list.todo_items.find(params[:id])
 
       if @todo_item.update_attributes(todo_item_params)
-        flash[:success] = "Saved todo list item."
-        redirect_to todo_list_todo_items_path
+        respond_to do |format|
+          format.html{
+            flash[:success] = "Saved todo list item."
+            redirect_to todo_list_todo_items_path
+          }
+          format.json{
+            render json: {success: true}
+          }
+        end
       else
-        flash[:error] = "That todo item could not be saved."
-        render action: :edit
+        respond_to do |format|
+          format.html{
+            flash[:error] = "That todo item could not be saved."
+            render action: :edit
+          }
+          format.json {
+            render json: {error: 'Sorry, we could not mark your todo item as done.'}
+          }
+        end
       end
     rescue ActiveRecord::RecordNotFound
-      redirect_to new_todo_list_path
+      respond_to do |format|
+          format.html{
+            flash[:error] = "That todo item could not be saved."
+            redirect_to new_todo_list_path
+          }
+          format.json {
+            render json: {error: 'Sorry, we could not mark your todo item as done.'}
+          }
+        end
+
     end
   end
 
@@ -88,7 +115,7 @@ class TodoItemsController < ApplicationController
   private
 
   def todo_item_params
-    params[:todo_item].permit(:content, :due_at)
+    params[:todo_item].permit(:content, :due_at, :done)
   end
 
 end
