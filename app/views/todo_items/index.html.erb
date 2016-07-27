@@ -9,7 +9,7 @@
       <% if todo_item.done %>
         Done!
       <% else %>
-        <button type="button">Mark as done</button>
+        <button type="button" value="<%=todo_item.id%>" id="btn_<%=todo_item.id%>">Mark as done</button>
       <% end %>
 
       <% if todo_item.due_at %>
