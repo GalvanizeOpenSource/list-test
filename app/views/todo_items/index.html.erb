@@ -2,10 +2,16 @@
 
 <ul class="todo_items">
   <% @todo_list.todo_items.each do |todo_item| %>
-    <li id="<%= dom_id(todo_item)%>"><%= todo_item.content %>
+    <li id="<%= dom_id(todo_item)%>">
+      <b><%= todo_item.content %></b> -
       <%= link_to "Edit", edit_todo_list_todo_item_path(todo_item) %>
       <%= link_to "Delete", todo_list_todo_item_url(todo_item), method: "delete", data: {confirm: "Are you sure you want to delete:\n#{todo_item.content}?"} %>
       <button id="item-<%=todo_item.id%>" type="button">Done!</button>
+      <% if todo_item.due_at %>
+        <p><strong>Due at:</strong> <%= todo_item.due_at %></p>
+      <% else %>
+        <p><strong>Due at:</strong> No due date specified.</p>
+      <% end %>
     </li>
   <% end %>
 </ul>
