@@ -1,7 +1,7 @@
 <h1><%= @todo_list.title %></h1>
 
 <ul class="todo_items" id="<%= dom_id(@todo_list)%>">
-  <% @todo_list.todo_items.each do |todo_item| %>
+  <% @todo_items.each do |todo_item| %>
     <li id="<%= dom_id(todo_item)%>" class="<%= 'done' if todo_item.done %>">
       <b><%= todo_item.content %></b> -
       <%= link_to "Edit", edit_todo_list_todo_item_path(todo_item) %>
