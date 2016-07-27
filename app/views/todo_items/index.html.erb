@@ -6,7 +6,12 @@
       <b><%= todo_item.content %></b> -
       <%= link_to "Edit", edit_todo_list_todo_item_path(todo_item) %>
       <%= link_to "Delete", todo_list_todo_item_url(todo_item), method: "delete", data: {confirm: "Are you sure you want to delete:\n#{todo_item.content}?"} %>
-      <button type="button">Done!</button>
+      <% if todo_item.done %>
+        Done!
+      <% else %>
+        <button type="button">Mark as done</button>
+      <% end %>
+
       <% if todo_item.due_at %>
         <p><strong>Due at:</strong> <%= todo_item.due_at %></p>
       <% else %>
