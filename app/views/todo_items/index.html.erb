@@ -1,12 +1,12 @@
 <h1><%= @todo_list.title %></h1>
 
-<ul class="todo_items">
+<ul class="todo_items" id="<%= dom_id(@todo_list)%>">
   <% @todo_list.todo_items.each do |todo_item| %>
     <li id="<%= dom_id(todo_item)%>">
       <b><%= todo_item.content %></b> -
       <%= link_to "Edit", edit_todo_list_todo_item_path(todo_item) %>
       <%= link_to "Delete", todo_list_todo_item_url(todo_item), method: "delete", data: {confirm: "Are you sure you want to delete:\n#{todo_item.content}?"} %>
-      <button id="item-<%=todo_item.id%>" type="button">Done!</button>
+      <button type="button">Done!</button>
       <% if todo_item.due_at %>
         <p><strong>Due at:</strong> <%= todo_item.due_at %></p>
       <% else %>
