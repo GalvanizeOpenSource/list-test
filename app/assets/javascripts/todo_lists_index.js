@@ -15,7 +15,6 @@ $(document).ready(function(){
     var item = $('#todo_item_'+item_id);
     var item_button_selector = 'btn_' + item_id;
     var url = '/todo_lists/'+list_id+'/todo_items/'+item_id;
-    debugger
 
     $.ajax({
       url: url,
@@ -76,13 +75,20 @@ var startTimers = function() {
   }
 
   for (var i=0;i<todoItems.length;i++) {
+    // Grab item attributes
     var item = todoItems.eq(i);
     var itemId = item.attr('id');
     var itemContent = item.attr('value');
+    // Grab due time from text
     var dueTimeString = item.text();
+    // Set counter to difference between now and due
     var count = calculateTimeDiffInSeconds(dueTimeString);
 
-    if (count > 0) {
+    // Find if item is done
+    var closestLi = item.closest('li');
+    var liClass = closestLi.attr('class');
+
+    if (count > 0 && liClass != 'done') {
       console.log('start');
       setInterval(popupTimer(itemContent, itemId, count), 1000);
     }
