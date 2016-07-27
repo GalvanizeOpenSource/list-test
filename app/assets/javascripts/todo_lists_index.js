@@ -8,7 +8,7 @@ $(document).ready(function(){
     $('#openModal').removeClass('show');
   });
 
-  $('button').click(function(){
+  $('button.complete').click(function(){
     var button = $(this);
     var list_id = $('ul').attr('id').replace('todo_list_','');
     var item_id = button.val();
