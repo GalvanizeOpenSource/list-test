@@ -26,7 +26,6 @@ $(document).ready(function(){
     }).done(function(data) {
       if (data['success']) {
         console.log('success');
-        debugger
         item.addClass('done');
         $(item_button_selector).replaceWith('Done!');
         hideModal();
@@ -52,11 +51,10 @@ var hideModal = function() {
   $('.modal-backdrop').remove();
 }
 
-var startTimers = function() {
-  var todoItems = $('p.due');
+var startTimer = function(itemContent, itemId, count) {
+  var timer = null;
 
-  var popupTimer = function(itemContent, itemId, count) {
-
+  var popupTimer = function() {
     return function() {
       count -= 1;
 
@@ -68,13 +66,18 @@ var startTimers = function() {
       }
     }
   }
+  timer = setInterval(popupTimer(), 1000);
+};
 
-  var calculateTimeDiffInSeconds = function(dueTimeString) {
-    var now = Date.now();
-    var due = Date.parse(dueTimeString);
-    var diff = due - Date.now();
-    return diff/1000;
-  }
+var calculateTimeDiffInSeconds = function(dueTimeString) {
+  var now = Date.now();
+  var due = Date.parse(dueTimeString);
+  var diff = due - Date.now();
+  return diff/1000;
+}
+
+var startTimers = function() {
+  var todoItems = $('p.due');
 
   for (var i=0;i<todoItems.length;i++) {
     // Grab item attributes
@@ -91,8 +94,7 @@ var startTimers = function() {
     var liClass = closestLi.attr('class');
 
     if (count > 0 && liClass != 'done') {
-      console.log('start');
-      var timer = setInterval(popupTimer(itemContent, itemId, count), 1000);
+      startTimer(itemContent, itemId, count);
     }
   };
-};
+}
