@@ -1,7 +1,11 @@
 class TodoItemsController < ApplicationController
   def index
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      if TodoList.exists?(id: params[:todo_list_id])
+        @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      else
+        redirect_to new_todo_list_path
+      end
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
     end
@@ -9,8 +13,12 @@ class TodoItemsController < ApplicationController
 
   def new
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
-      @todo_item = @todo_list.todo_items.new
+      if TodoList.exists?(id: params[:todo_list_id])
+        @todo_list = TodoList.find_by(id: params[:todo_list_id])
+        @todo_item = @todo_list.todo_items.new
+      else
+        redirect_to new_todo_list_path
+      end
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
     end
@@ -32,10 +40,34 @@ class TodoItemsController < ApplicationController
     end
   end
 
-  def edit
+  def destroy
     begin
       @todo_list = TodoList.find_by(id: params[:todo_list_id])
-      @todo_item = @todo_list.todo_items.find(params[:id])
+      @todo_item = @todo_list.todo_items.destroy(params[:id])
+      length = @todo_list.todo_items.reload.length
+      if length == 0
+        @todo_list.destroy
+        flash[:success] = "The last todo item was successfully removed and your todo list was deleted."
+        redirect_to todo_lists_url
+      else
+        flash[:success] = "Your todo item was successfully removed."
+        redirect_to todo_list_todo_items_path
+      end
+    rescue ActiveRecord::RecordNotFound
+      flash[:error] = "Sorry, there was a problem deleting your todo item."
+      redirect_to new_todo_list_path
+    end
+  end
+
+
+  def edit
+    begin
+      if TodoList.exists?(id: params[:todo_list_id])
+        @todo_list = TodoList.find_by(id: params[:todo_list_id])
+        @todo_item = @todo_list.todo_items.find(params[:id])
+      else
+        redirect_to new_todo_list_path
+      end
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
     end
@@ -43,15 +75,18 @@ class TodoItemsController < ApplicationController
 
   def update
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
-      @todo_item = @todo_list.todo_items.find(params[:id])
-
-      if @todo_item.update_attributes(todo_item_params)
-        flash[:success] = "Saved todo list item."
-        redirect_to todo_list_todo_items_path
+      if TodoList.exists?(id: params[:todo_list_id])
+        @todo_list = TodoList.find_by(id: params[:todo_list_id])
+        @todo_item = @todo_list.todo_items.find(params[:id])
+        if @todo_item.update_attributes(todo_item_params)
+          flash[:success] = "Saved todo list item."
+          redirect_to todo_list_todo_items_path
+        else
+          flash[:error] = "That todo item could not be saved."
+          render action: :edit
+        end
       else
-        flash[:error] = "That todo item could not be saved."
-        render action: :edit
+        redirect_to new_todo_list_path
       end
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
