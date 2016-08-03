@@ -4,6 +4,7 @@ describe TodoItemsController do
   let(:todo_item) { TodoItem.create(content: "Get milk and eggs") }
   let(:todo_list) { TodoList.create(title: "My Title", description: "This is my test list") }
 
+
   before() do
     todo_list.todo_items << todo_item
   end
@@ -11,7 +12,6 @@ describe TodoItemsController do
   describe "#index" do
     it 'should set the @todo_list controller based off the todo_list_id' do
       get :index, todo_list_id: todo_list.id
-
       expect(assigns(:todo_list)).to eq(todo_list)
     end
 
@@ -77,6 +77,22 @@ describe TodoItemsController do
     it 'should redirect to new_todo_list_path if todo_list is not found' do
       post :create, todo_list_id: todo_list.id + 1, todo_item: { content: "This is my new item" }
       expect(response).to redirect_to(new_todo_list_path)
+    end
+  end
+
+  describe "#destroy" do
+    it 'should delete todo list if only one item in specified list' do
+      delete :destroy, todo_list_id: todo_list.id, id: todo_item.id
+      expect(TodoList.all.length).to eq(0)
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'should delete an item from the specified list' do
+      todo_list.todo_items << TodoItem.create(content: "Churn Butter")
+      delete :destroy, todo_list_id: todo_list.id, id: todo_item.id
+      todo_list.reload
+      expect(todo_list.todo_items.length).to eq(1)
+      expect(response).to redirect_to(root_path)
     end
   end
 end
