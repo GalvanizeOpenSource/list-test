@@ -79,4 +79,19 @@ describe TodoItemsController do
       expect(response).to redirect_to(new_todo_list_path)
     end
   end
+
+  describe "#destroy" do
+    it 'should DELETE destroy item from list' do
+      delete :destroy, todo_list_id: todo_list.id, id: todo_item.id
+      expect(todo_list.todo_items.length).to eq(1)
+      expect(todo_list.todo_items[0].content).to eq("Get milk and eggs")
+    end
+
+    it 'should DELETE destroy list after last item is deleted' do
+      TodoItem.delete_all
+      todo_item = TodoItem.create(todo_list_id: todo_list.id, content: "Last item")
+      delete :destroy, todo_list_id: todo_list.id, id: todo_item.id
+      expect(TodoList.all().length).to eq(0)
+    end
+  end
 end
