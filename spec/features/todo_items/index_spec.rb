@@ -34,4 +34,32 @@ describe "Viewing todo items" do
       expect(page).to have_content("Eggs")
     end
   end
+
+  it "displays delete link" do
+    todo_list.todo_items.create(content: "Milk")
+    todo_list.todo_items.create(content: "Eggs")
+
+    visit_todo_list(todo_list)
+
+    within('ul.todo_items') do
+      expect(page).to have_content("Delete Todo Item")
+    end
+  end
+
+  # it " displays a confirmation modal when delete link is clicked" do
+  #   todo_list.todo_items.create(content: "Milk")
+  #   todo_list.todo_items.create(content: "Eggs")
+  #
+  #   visit_todo_list(todo_list)
+  #
+  #   within('ul.todo_items') do
+  #     first(:link, "Delete Todo Item").click
+  #     page.accept_confirm do ****Cappybara method isssue here****
+  #         page.should have_content("Is it OK to delete this todo list item?")
+  #     end
+  #   end
+  # end
+
+  # it "redirects to todo_item index page theres an error" do
+  # end
 end
