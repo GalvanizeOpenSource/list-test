@@ -54,12 +54,12 @@ describe "Viewing todo items" do
   #
   #   within('ul.todo_items') do
   #     first(:link, "Delete Todo Item").click
-  #     page.accept_confirm do
+  #     page.accept_confirm do ****Cappybara method isssue here****
   #         page.should have_content("Is it OK to delete this todo list item?")
   #     end
   #   end
   # end
 
-  # it "redirects to tod0_item index page theres an error" do
+  # it "redirects to todo_item index page theres an error" do
   # end
 end
