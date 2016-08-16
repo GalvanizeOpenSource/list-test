@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "todo_lists/edit" do
   before(:each) do
-    @todo_list = assign(:todo_list, stub_model(TodoList,
+    @todo_list = assign(:todo_list, mock_model(TodoList,
       :title => "MyString",
       :description => "MyText"
     ))
