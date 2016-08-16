@@ -1,9 +1,11 @@
+
 <h1><%= @todo_list.title %></h1>
 
 <ul class="todo_items">
   <% @todo_list.todo_items.each do |todo_item| %>
   <li id="<%= dom_id(todo_item)%>"><%= todo_item.content %>
     <%= link_to "Edit", edit_todo_list_todo_item_path(todo_item) %>
+    <%= link_to "Destroy",  {:controller=>:todo_items, :action=>:destroy, :id=>todo_item.id},  method: :delete, data: { confirm: 'Are you sure?' } %>
   </li>
   <% end %>
 </ul>
@@ -11,3 +13,36 @@
 <p>
   <%= link_to "New Todo Item", new_todo_list_todo_item_path %>
 </p>
+
+
+
+<!-- refactor to mimic todo_list table -->
+
+<!-- <h1><%= @todo_list.title %></h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Content</th>
+    <th colspan="2"></th>
+  </tr>
+  </thead>
+
+  <tbody class="todo_items">
+  <% @todo_list.todo_items.each do |todo_item| %>
+      <tr class="todo_item" id="<%= dom_id(todo_item) %>">
+        <td><%= todo_item.content %></td>
+        <td>
+          <%= link_to "Edit", edit_todo_list_todo_item_path(todo_item) %>
+          <%= link_to "Destroy",  {:controller=>:todo_items, :action=>:destroy, :id=>todo_item.id},  method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<p>
+  <%= link_to "New Todo Item", new_todo_list_todo_item_path %>
+</p> -->

@@ -12,7 +12,10 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'rspec'
+gem 'rspec-core', '~>2.99.2'
 
+gem 'rspec-activemodel-mocks'
 
 
 group :development, :test do
@@ -35,3 +38,4 @@ group :test do
   gem 'capybara', '~> 2.1.0'
   gem 'shoulda-matchers', '~> 3.1.1'
 end
+

@@ -79,4 +79,11 @@ describe TodoItemsController do
       expect(response).to redirect_to(new_todo_list_path)
     end
   end
+
+  describe "DELETE destroy" do
+    it "destroying the last item will delete the List, and redirect to the app's root url" do
+      delete :destroy, {:id => todo_item.id, :todo_list_id => todo_list.id}
+      response.should redirect_to(root_path)
+    end
+  end
 end

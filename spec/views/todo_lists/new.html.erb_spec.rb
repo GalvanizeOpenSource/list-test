@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "todo_lists/new" do
   before(:each) do
-    assign(:todo_list, stub_model(TodoList,
+    assign(:todo_list, mock_model(TodoList,
       :title => "MyString",
       :description => "MyText"
     ).as_new_record)

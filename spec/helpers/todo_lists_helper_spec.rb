@@ -11,5 +11,17 @@ require 'spec_helper'
 #   end
 # end
 describe TodoListsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:todo_item) { TodoItem.create(content: "Only one item") }
+  let(:todo_list) { TodoList.create(title: "Delete This List", description: "This list should be deleted after deleting items") }
+
+  before() do
+    todo_list.todo_items << todo_item
+  end
+
+  it "destroy method will delete an item" do
+    expect { todo_item.destroy }.to change { TodoItem.count }.by(-1) 
+  end
+  
 end
+
+
