@@ -7,6 +7,7 @@
 #  content      :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  due_datetime :datetime
 #
 
 require 'spec_helper'
