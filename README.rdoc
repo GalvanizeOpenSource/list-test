@@ -1,5 +1,5 @@
 {<img src="https://codeclimate.com/github/ShepBook/list-test/badges/gpa.svg" />}[https://codeclimate.com/github/ShepBook/list-test]
-{<img src="https://codeclimate.com/github/ShepBook/list-test/badges/coverage.svg" />}[https://codeclimate.com/github/ShepBook/list-test/coverage]
+{<img src="https://travis-ci.org/ShepBook/list-test.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/ShepBook/list-test]
 
 == Galvanize Todo
 
