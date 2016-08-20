@@ -16,7 +16,7 @@ describe TodoItemsController do
     end
 
     it 'should redirect to new_todo_list_path if todo_list is not found' do
-      get :index, todo_list_id: todo_list.id + 1
+      get :index, todo_list_id: todo_list.id + 10
       expect(response).to redirect_to(new_todo_list_path)
     end
 
@@ -77,6 +77,18 @@ describe TodoItemsController do
     it 'should redirect to new_todo_list_path if todo_list is not found' do
       post :create, todo_list_id: todo_list.id + 1, todo_item: { content: "This is my new item" }
       expect(response).to redirect_to(new_todo_list_path)
+    end
+  end
+
+  describe "#complete_item" do
+    it 'should mark an item as complete' do
+      post :complete_item, todo_list_id: todo_list.id, id: todo_item.id
+      expect(todo_item.reload.complete?).to be(true)
+    end
+
+    it "should redirect back if no todo_item found" do
+      post :complete_item, todo_list_id: todo_list.id, id: todo_item.id + 1
+      expect(response).to redirect_to(todo_list_todo_items_path(todo_list))
     end
   end
 end

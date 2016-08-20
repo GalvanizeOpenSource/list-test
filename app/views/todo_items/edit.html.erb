@@ -12,5 +12,9 @@
     <% end %>
   <%= form.label :content %>
   <%= form.text_field :content %>
+  <br>
+  <%= form.label :due_datetime, "Due Date and Time" %>
+  <%= form.datetime_select :due_datetime %>
+  <br>
   <%= form.submit "Save" %>
 <% end %>

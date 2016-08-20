@@ -1,13 +1,79 @@
 <h1><%= @todo_list.title %></h1>
 
 <ul class="todo_items">
-  <% @todo_list.todo_items.each do |todo_item| %>
-  <li id="<%= dom_id(todo_item)%>"><%= todo_item.content %>
-    <%= link_to "Edit", edit_todo_list_todo_item_path(todo_item) %>
-  </li>
+  <% @todo_list.todo_items.order(due_datetime: :desc).each do |todo_item| %>
+    <li id="<%= dom_id(todo_item)%>" style="<%= todo_item.complete? ? 'background-color: #E0EEE0' : '' %>"><%= todo_item.content %>
+      <%= link_to "Edit", edit_todo_list_todo_item_path(todo_item) %>
+
+      <!-- Show proper button or text. -->
+      <% if todo_item.complete? %>
+        Done!
+      <% else %>
+        <%= button_to "Mark Complete!", todo_list_complete_item_path(todo_item), class: "btn btn-primary" %>
+      <% end %>
+
+      <% if todo_item.due_datetime %>
+        <!-- Set time until modal should pop. -->
+        <% time_until_todo_alert = ((todo_item.due_datetime - 10.minutes).to_i - Time.zone.now.to_i) * 1000 %>
+
+        <!-- Only pop modal if the todo_item has a due date, it isn't complete
+             and the time has not passed. This prevents a massive wave of modals
+             if you have a bunch of items that have passed their alert time. -->
+        <% if !todo_item.complete? && time_until_todo_alert > 0 %>
+          <div class="modal fade" id='<%= "#{dom_id(todo_item)}_modal" %>' tabindex="-1" role="dialog" aria-labelledby='<%= "Todo #{todo_item.id} modal" %>'>
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Todo Item Due</h4>
+                </div>
+                <div class="modal-body">
+                  Due in 10 minutes:
+                  <%= "#{todo_item.content}" %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
+                  <!-- I used "Mark Complete!" instead of "Done" for button text
+                       to keep things consistent. -->
+                  <%= button_to "Mark Complete!", todo_list_complete_item_path(todo_item), class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Little JS function for setting timeout and calling modal at
+               the time it is due, generated for each todo item that needs it. -->
+          <script type="text/javascript">
+            function <%="call_modal_#{dom_id(todo_item)}_modal"%>(){
+              $('<%= "##{dom_id(todo_item)}_modal" %>').modal()
+            };
+            $(document).ready(function(){
+              setTimeout(<%="call_modal_#{dom_id(todo_item)}_modal"%>, <%= time_until_todo_alert %>)
+            });
+          </script>
+        <% end %>
+      <% end %>
+
+    </li>
   <% end %>
 </ul>
 
 <p>
   <%= link_to "New Todo Item", new_todo_list_todo_item_path %>
 </p>
+
+<!-- I want to do this via ajax, but I'm not sure on the flash message -->
+
+<!-- <script type="text/javascript">
+  $('.button_to').click(function() {
+    var $this = $(this);
+    $.ajax({
+      url: $this.attr('action'),
+      type: 'POST',
+      success: function(data) {
+        $this.text('Done!');
+        $this.closest('li').css('background-color', '#E0EEE0');
+      }
+    });
+  });
+</script> -->

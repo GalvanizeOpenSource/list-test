@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: todo_items
+#
+#  id           :integer          not null, primary key
+#  todo_list_id :integer
+#  content      :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  due_datetime :datetime
+#  complete     :boolean          default(FALSE)
+#
+
 require 'spec_helper'
 
 describe TodoItem do

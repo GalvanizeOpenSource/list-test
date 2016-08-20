@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :todo_lists do
     resources :todo_items
+    post 'complete_item/:id', to: 'todo_items#complete_item', as: 'complete_item'
   end
   root 'todo_lists#index'
   # The priority is based upon order of creation: first created -> highest priority.
