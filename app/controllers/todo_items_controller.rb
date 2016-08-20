@@ -1,8 +1,10 @@
 class TodoItemsController < ApplicationController
   def index
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_list = TodoList.find(params[:todo_list_id])
     rescue ActiveRecord::RecordNotFound
+      redirect_to new_todo_list_path
+    rescue
       redirect_to new_todo_list_path
     end
   end
@@ -12,6 +14,8 @@ class TodoItemsController < ApplicationController
       @todo_list = TodoList.find_by(id: params[:todo_list_id])
       @todo_item = @todo_list.todo_items.new
     rescue ActiveRecord::RecordNotFound
+      redirect_to new_todo_list_path
+    rescue
       redirect_to new_todo_list_path
     end
   end
@@ -38,6 +42,8 @@ class TodoItemsController < ApplicationController
       @todo_item = @todo_list.todo_items.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
+    rescue
+      redirect_to new_todo_list_path
     end
   end
 
@@ -54,6 +60,8 @@ class TodoItemsController < ApplicationController
         render action: :edit
       end
     rescue ActiveRecord::RecordNotFound
+      redirect_to new_todo_list_path
+    rescue
       redirect_to new_todo_list_path
     end
   end

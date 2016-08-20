@@ -16,7 +16,7 @@ describe TodoItemsController do
     end
 
     it 'should redirect to new_todo_list_path if todo_list is not found' do
-      get :index, todo_list_id: todo_list.id + 1
+      get :index, todo_list_id: todo_list.id + 10
       expect(response).to redirect_to(new_todo_list_path)
     end
 

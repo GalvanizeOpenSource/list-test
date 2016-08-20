@@ -11,7 +11,7 @@ describe "todo_lists/show" do
   it "renders attributes in <p>" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Title/)
-    rendered.should match(/MyText/)
+    expect(rendered).to match(/Title/)
+    expect(rendered).to match(/MyText/)
   end
 end
