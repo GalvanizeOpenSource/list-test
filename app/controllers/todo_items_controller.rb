@@ -4,8 +4,6 @@ class TodoItemsController < ApplicationController
       @todo_list = TodoList.find(params[:todo_list_id])
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
-    rescue
-      redirect_to new_todo_list_path
     end
   end
 
@@ -13,8 +11,6 @@ class TodoItemsController < ApplicationController
     begin
       @todo_list = TodoList.find_by(id: params[:todo_list_id])
       @todo_item = @todo_list.todo_items.new
-    rescue ActiveRecord::RecordNotFound
-      redirect_to new_todo_list_path
     rescue
       redirect_to new_todo_list_path
     end
@@ -40,8 +36,6 @@ class TodoItemsController < ApplicationController
     begin
       @todo_list = TodoList.find_by(id: params[:todo_list_id])
       @todo_item = @todo_list.todo_items.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to new_todo_list_path
     rescue
       redirect_to new_todo_list_path
     end
@@ -59,8 +53,6 @@ class TodoItemsController < ApplicationController
         flash[:error] = "That todo item could not be saved."
         render action: :edit
       end
-    rescue ActiveRecord::RecordNotFound
-      redirect_to new_todo_list_path
     rescue
       redirect_to new_todo_list_path
     end
@@ -73,10 +65,6 @@ class TodoItemsController < ApplicationController
 
       respond_to do |format|
         if @todo_item.update_attribute(:complete, true)
-          format.html { redirect_to todo_list_todo_items_path(@todo_list) }
-          format.js
-        else
-          flash[:error] = "Sorry, we could not mark your todo item as done"
           format.html { redirect_to todo_list_todo_items_path(@todo_list) }
           format.js
         end
