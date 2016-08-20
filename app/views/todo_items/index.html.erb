@@ -2,8 +2,13 @@
 
 <ul class="todo_items">
   <% @todo_list.todo_items.each do |todo_item| %>
-  <li id="<%= dom_id(todo_item)%>"><%= todo_item.content %>
+  <li id="<%= dom_id(todo_item)%>" style="<%= todo_item.complete? ? 'background-color: #E0EEE0' : '' %>"><%= todo_item.content %>
     <%= link_to "Edit", edit_todo_list_todo_item_path(todo_item) %>
+    <% if todo_item.complete? %>
+      Done!
+    <% else %>
+      <%= button_to "Mark Complete!", todo_list_complete_item_path(todo_item) %>
+    <% end %>
   </li>
   <% end %>
 </ul>
@@ -11,3 +16,19 @@
 <p>
   <%= link_to "New Todo Item", new_todo_list_todo_item_path %>
 </p>
+
+<!-- I want to do this via ajax, but I'm not sure on the flash message -->
+
+<!-- <script type="text/javascript">
+  $('.button_to').click(function() {
+    var $this = $(this);
+    $.ajax({
+      url: $this.attr('action'),
+      type: 'POST',
+      success: function(data) {
+        $this.text('Done!');
+        $this.closest('li').css('background-color', '#E0EEE0');
+      }
+    });
+  });
+</script> -->

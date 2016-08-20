@@ -50,6 +50,7 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    coderay (1.1.1)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.1.x)
@@ -84,6 +85,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
@@ -95,6 +97,13 @@ GEM
       pkg-config (~> 1.1.7)
     phantomjs (2.1.1.0)
     pkg-config (1.1.7)
+    pry (0.10.4)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pry-byebug (3.4.0)
+      byebug (~> 9.0)
+      pry (~> 0.10)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -152,6 +161,7 @@ GEM
       rdoc (~> 4.0)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
+    slop (3.6.0)
     spring (1.7.2)
     sprockets (3.7.0)
       concurrent-ruby (~> 1.0)
@@ -191,6 +201,8 @@ DEPENDENCIES
   jasmine-jquery-rails
   jbuilder (~> 2.0)
   jquery-rails
+  pry
+  pry-byebug
   rails (~> 4.2.7)
   rspec-rails (~> 2.0)
   sass-rails (~> 5.0)

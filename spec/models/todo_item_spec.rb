@@ -8,6 +8,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  due_datetime :datetime
+#  complete     :boolean          default(FALSE)
 #
 
 require 'spec_helper'

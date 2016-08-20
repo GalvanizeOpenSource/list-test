@@ -58,6 +58,28 @@ class TodoItemsController < ApplicationController
     end
   end
 
+  def complete_item
+    begin
+      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_item = @todo_list.todo_items.find(params[:id])
+
+      respond_to do |format|
+        if @todo_item.update_attribute(:complete, true)
+          format.html { redirect_to todo_list_todo_items_path(@todo_list) }
+          format.js
+        else
+          flash[:error] = "Sorry, we could not mark your todo item as done"
+          format.html { redirect_to todo_list_todo_items_path(@todo_list) }
+          format.js
+        end
+      end
+
+    rescue ActiveRecord::RecordNotFound
+      flash[:error] = "Sorry, we could not mark your todo item as done"
+      redirect_to todo_list_todo_items_path(@todo_list)
+    end
+  end
+
   def url_options
     {todo_list_id: params[:todo_list_id]}.merge(super)
   end
