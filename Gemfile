@@ -28,7 +28,7 @@ end
 group :development, :test do
   gem 'jasmine'
   gem 'jasmine-jquery-rails'
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-rails', '~> 3'
 end
 
 group :test do
