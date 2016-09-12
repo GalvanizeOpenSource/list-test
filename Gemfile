@@ -12,8 +12,8 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-
-
+# DATETIME VALIDATION
+gem 'validates_timeliness', '~> 4.0'
 
 group :development, :test do
   gem 'byebug'
@@ -32,6 +32,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara', '~> 2.1.0'
+  gem 'capybara', '~> 2.2.0'
   gem 'shoulda-matchers', '~> 3.1.1'
 end
