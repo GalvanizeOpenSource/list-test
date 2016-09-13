@@ -9,7 +9,7 @@ describe TodoListsController do
     it "assigns all todo_lists as @todo_lists" do
       todo_list = TodoList.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:todo_lists).should eq([todo_list])
+      expect(assigns(:todo_lists)).to eq [todo_list]
     end
   end
 
@@ -17,14 +17,14 @@ describe TodoListsController do
     it "assigns the requested todo_list as @todo_list" do
       todo_list = TodoList.create! valid_attributes
       get :show, {:id => todo_list.to_param}, valid_session
-      assigns(:todo_list).should eq(todo_list)
+      expect(assigns(:todo_list)).to eq todo_list
     end
   end
 
   describe "GET new" do
     it "assigns a new todo_list as @todo_list" do
       get :new, {}, valid_session
-      assigns(:todo_list).should be_a_new(TodoList)
+      expect(assigns(:todo_list)).to be_a_new(TodoList)
     end
   end
 
@@ -32,7 +32,7 @@ describe TodoListsController do
     it "assigns the requested todo_list as @todo_list" do
       todo_list = TodoList.create! valid_attributes
       get :edit, {:id => todo_list.to_param}, valid_session
-      assigns(:todo_list).should eq(todo_list)
+      expect(assigns(:todo_list)).to eq todo_list
     end
   end
 
@@ -46,65 +46,68 @@ describe TodoListsController do
 
       it "assigns a newly created todo_list as @todo_list" do
         post :create, {:todo_list => valid_attributes}, valid_session
-        assigns(:todo_list).should be_a(TodoList)
-        assigns(:todo_list).should be_persisted
+        expect(assigns(:todo_list)).to be_a TodoList
+        expect(assigns(:todo_list)).to be_persisted
       end
 
       it "redirects to the created todo_list" do
         post :create, {:todo_list => valid_attributes}, valid_session
-        response.should redirect_to(TodoList.last)
+        expect(response).to redirect_to TodoList.last
       end
     end
 
     describe "with invalid params" do
+      before do
+        allow(TodoList).to receive(:save) { false }
+      end
+
       it "assigns a newly created but unsaved todo_list as @todo_list" do
-        TodoList.any_instance.stub(:save).and_return(false)
         post :create, {:todo_list => { "title" => "invalid value" }}, valid_session
-        assigns(:todo_list).should be_a_new(TodoList)
+        expect(assigns(:todo_list)).to be_a_new(TodoList)
       end
 
       it "re-renders the 'new' template" do
-        TodoList.any_instance.stub(:save).and_return(false)
         post :create, {:todo_list => { "title" => "invalid value" }}, valid_session
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
   end
 
   describe "PUT update" do
     describe "with valid params" do
+      before do
+        allow(TodoList).to receive(:update).with({ "title" => "MyString" })
+      end
+
       it "updates the requested todo_list" do
         todo_list = TodoList.create! valid_attributes
-        TodoList.any_instance.should_receive(:update).with({ "title" => "MyString" })
         put :update, {:id => todo_list.to_param, :todo_list => { "title" => "MyString" }}, valid_session
       end
 
       it "assigns the requested todo_list as @todo_list" do
         todo_list = TodoList.create! valid_attributes
         put :update, {:id => todo_list.to_param, :todo_list => valid_attributes}, valid_session
-        assigns(:todo_list).should eq(todo_list)
+        expect(assigns(:todo_list)).to eq todo_list
       end
 
       it "redirects to the todo_list" do
         todo_list = TodoList.create! valid_attributes
         put :update, {:id => todo_list.to_param, :todo_list => valid_attributes}, valid_session
-        response.should redirect_to(todo_list)
+        expect(response).to redirect_to todo_list
       end
     end
 
     describe "with invalid params" do
       it "assigns the todo_list as @todo_list" do
         todo_list = TodoList.create! valid_attributes
-        TodoList.any_instance.stub(:save).and_return(false)
         put :update, {:id => todo_list.to_param, :todo_list => { "title" => "invalid value" }}, valid_session
-        assigns(:todo_list).should eq(todo_list)
+        expect(assigns(:todo_list)).to eq todo_list
       end
 
       it "re-renders the 'edit' template" do
         todo_list = TodoList.create! valid_attributes
-        TodoList.any_instance.stub(:save).and_return(false)
-        put :update, {:id => todo_list.to_param, :todo_list => { "title" => "invalid value" }}, valid_session
-        response.should render_template("edit")
+        put :update, {:id => todo_list.to_param, :todo_list => { "title" => "" }}, valid_session
+        expect(response).to render_template('edit')
       end
     end
   end
@@ -120,7 +123,7 @@ describe TodoListsController do
     it "redirects to the todo_lists list" do
       todo_list = TodoList.create! valid_attributes
       delete :destroy, {:id => todo_list.to_param}, valid_session
-      response.should redirect_to(todo_lists_url)
+      expect(response).to redirect_to todo_lists_url
     end
   end
 

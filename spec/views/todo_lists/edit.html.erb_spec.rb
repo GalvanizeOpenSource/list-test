@@ -2,10 +2,7 @@ require 'spec_helper'
 
 describe "todo_lists/edit" do
   before(:each) do
-    @todo_list = assign(:todo_list, stub_model(TodoList,
-      :title => "MyString",
-      :description => "MyText"
-    ))
+    @todo_list = assign(:todo_list, TodoList.create(title: "MyString", description: "MyDescription"))
   end
 
   it "renders the edit todo_list form" do

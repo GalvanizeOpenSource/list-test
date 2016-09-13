@@ -8,6 +8,7 @@ class TodoItemsController < ApplicationController
   before_action :set_todo_item, only: [:edit, :update, :destroy]
 
   def index
+    @todo_list = @todo_list
   end
 
   def new
@@ -45,14 +46,18 @@ class TodoItemsController < ApplicationController
   private
 
   def set_todo_items
-    @todo_items = @todo_list.todo_items
-    @todo_items = @todo_items.order_due_by + @todo_items.order_alphabetically
+    begin
+      @todo_items = @todo_list.todo_items
+      @todo_items = @todo_items.order_due_by + @todo_items.order_alphabetically
+    rescue ActiveRecord::RecordNotFound, NoMethodError
+      redirect_to new_todo_list_path
+    end
   end
 
   def set_todo_item
     begin
       @todo_item = @todo_list.todo_items.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
+    rescue ActiveRecord::RecordNotFound, NoMethodError
       redirect_to new_todo_list_path
     end
   end
