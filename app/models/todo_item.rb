@@ -13,7 +13,7 @@ class TodoItem < ActiveRecord::Base
 
   def self.due_in(minutes = 10.minutes)
     end_datetime = DateTime.current + minutes
-    where(due_by: [DateTime.current..end_datetime])
+    where(complete: false, due_by: [DateTime.current..end_datetime])
   end
 
   # TODO: Look into alias_method, odd behavior with complete? method
@@ -21,9 +21,13 @@ class TodoItem < ActiveRecord::Base
     complete?
   end
 
+  # NOTE: This method began its life toggling the state using !completed?
+  # but due to the assignment not requiring "toggling" we only mark the todo_item complete
+  # This method will allow us to implement toggle functionality with relative ease.
   def toggle_state!
     self.complete = true
     self.save(validate: false)
+    self
     # NOTE: uncomment if you'd like to see an error message thrown when marking a todo item complete.
     # raise ActiveRecord::Rollback
   end
