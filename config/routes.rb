@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   scope :api, module: 'api', as: :api do
     resources :todo_item_state, only: [:update]
     resources :due_items, only: [:index]
+    resources :todo_items, only: [:create]
   end
 end
