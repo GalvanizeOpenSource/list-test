@@ -6,6 +6,8 @@ describe "TodoLists" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
       get todo_lists_path
       expect(response).to have_http_status(:ok)
+
+
     end
   end
 end
