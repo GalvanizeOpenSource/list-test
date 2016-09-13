@@ -3,12 +3,11 @@ class TodoItemsController < ApplicationController
   # Here are some references:
   # https://forum.upcase.com/t/memoized-helper-methods-instead-of-instance-variables-in-controllers/5848
   # https://thoughtbot.com/upcase/videos/encapsulation-and-global-state-in-rails
-  before_action :set_todo_list, only: [:index, :new, :create, :edit, :destroy]
+  before_action :set_todo_list, only: [:index, :new, :create, :edit, :update, :destroy]
   before_action :set_todo_items, only: [:index]
   before_action :set_todo_item, only: [:edit, :update, :destroy]
 
   def index
-    @todo_list = @todo_list
   end
 
   def new
@@ -45,6 +44,14 @@ class TodoItemsController < ApplicationController
 
   private
 
+  def set_todo_list
+    begin
+      @todo_list = TodoList.find(params[:todo_list_id])
+    rescue ActiveRecord::RecordNotFound, NoMethodError
+      redirect_to new_todo_list_path
+    end
+  end
+
   def set_todo_items
     begin
       @todo_items = @todo_list.todo_items
@@ -58,14 +65,6 @@ class TodoItemsController < ApplicationController
     begin
       @todo_item = @todo_list.todo_items.find(params[:id])
     rescue ActiveRecord::RecordNotFound, NoMethodError
-      redirect_to new_todo_list_path
-    end
-  end
-
-  def set_todo_list
-    begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
-    rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
     end
   end

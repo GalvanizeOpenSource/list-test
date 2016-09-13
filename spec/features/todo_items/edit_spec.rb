@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Editing todo items" do
+describe "Editing todo items", type: :feature do
   let!(:todo_list) { TodoList.create(title: "Grocery list", description: "Groceries")}
   let!(:todo_item) { todo_list.todo_items.create(content: "Milk") }
 
