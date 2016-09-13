@@ -39,7 +39,6 @@
     }).fail(function(jqXHR, textStatus, errorThrown) {
       poll();
     });
-  }, 300000);
-  // }, 5000);
+  }, 5000);
 })();
 
