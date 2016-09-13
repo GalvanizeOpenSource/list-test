@@ -14,7 +14,6 @@ todo_items = []
   todo_items << todo_list.todo_items.create(
     content: SecureRandom.hex(50)
   )
-
 end
 
 puts "#{todo_items.size} todo items created"

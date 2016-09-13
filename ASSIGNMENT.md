@@ -3,11 +3,11 @@
 
 ## If you are applying to the Senior Developer position:
 ### Implement the following feature:
-Add the ability for a user to specify a due date and time for a todo item.  
+Add the ability for a user to specify a due date and time for a todo item.
 
-The user should be able to mark the item as done from a button in the todo item row on the todo_items#index page.  
+The user should be able to mark the item as done from a button in the todo item row on the todo_items#index page.
 
-Upon clicking on the button, the button should be replaced by the text "Done!" and the background color of the todo item row should be changed to #E0EEE0.  Also, 10 minutes prior to a task being due, a modal should open announcing with title of "Todo Item Due" and a body of "Due in 10 minutes:" with the todo item description shown on the next line.  The modal should have two buttons, Done and Dismiss.  Done should mark the task as done, and Dismiss should close the modal with no change to the todo item.  
+Upon clicking on the button, the button should be replaced by the text "Done!" and the background color of the todo item row should be changed to #E0EEE0.  Also, 10 minutes prior to a task being due, a modal should open announcing with title of "Todo Item Due" and a body of "Due in 10 minutes:" with the todo item description shown on the next line.  The modal should have two buttons, Done and Dismiss.  Done should mark the task as done, and Dismiss should close the modal with no change to the todo item.
 
 Any errors should display a flash message at the top of the todo_items#index page which says "Sorry, we could not mark your todo item as done".
 
@@ -18,11 +18,11 @@ Remove deprecation errors
 Make failing tests pass
 
 Write all appropriate tests for the new delete functionality
-  
-  
+
+
 ## If you are applying to the Junior Developer position:
 ### Implement the following feature:
-Add the ability to delete a todo item from the todo_item#index page.  
+Add the ability to delete a todo item from the todo_item#index page.
 
 Add a link in the todo item row that when the user clicks on it, it will open a confirmation modal.
 

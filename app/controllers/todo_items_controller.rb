@@ -3,9 +3,9 @@ class TodoItemsController < ApplicationController
   # Here are some references:
   # https://forum.upcase.com/t/memoized-helper-methods-instead-of-instance-variables-in-controllers/5848
   # https://thoughtbot.com/upcase/videos/encapsulation-and-global-state-in-rails
-  before_action :set_todo_list, only: [:index, :new, :create, :edit]
+  before_action :set_todo_list, only: [:index, :new, :create, :edit, :destroy]
   before_action :set_todo_items, only: [:index]
-  before_action :set_todo_item, only: [:edit, :update]
+  before_action :set_todo_item, only: [:edit, :update, :destroy]
 
   def index
   end

@@ -1,6 +1,6 @@
 module ApplicationHelper
   def display_datetime_local(datetime)
-    datetime.strftime("%m/%d/%Y, %H:%M")
+    datetime.strftime("%m/%d/%Y, %H:%M") if datetime.present?
   end
 
   def display_error_messages(model)
