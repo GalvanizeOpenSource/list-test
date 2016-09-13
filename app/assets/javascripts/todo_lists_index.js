@@ -31,17 +31,15 @@ $(document).ready(function(){
       }).done(function(res) {
         // Reset form field
         $content.val('');
-        console.log(res);
+        $content.next().replaceWith("<ul>" + res.message + "</ul>");
+
       }).fail(function(jqXHR) {
-        console.log(jqXHR);
         var errors = jqXHR.responseJSON.errors;
         var content = errors.map(function(message, index) {
-          $('<li>').val(message);
+          return "<li>" + message + "</li>";
         });
 
-
-
-        $('<ul>').prepend(content);
+        $content.after("<ul>" + content.join('') + "</ul>");
       });
     }
   });
