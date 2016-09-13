@@ -9,8 +9,10 @@ module TodoItemsHelper
 
     data.merge({ modal: true }) if modal
 
+    button_text = modal == true ? 'Done' : 'Mark as done'
+
     link_to '#', class: 'toggle-state', data: data do
-      "Mark as done"
+      button_text
     end
   end
 
