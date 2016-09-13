@@ -1,10 +1,11 @@
 $(document).ready(function(){
+  var modal = new Modal('#openModal');
 
   $(document).on('click', '.add-item', function(){
-    $('#openModal').addClass('show');
+    modal.open();
   });
 
   $(document).on('click', '.close', function(){
-    $('#openModal').removeClass('show');
+    modal.close();
   });
 });

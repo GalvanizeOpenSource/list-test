@@ -11,13 +11,18 @@ class TodoItem < ActiveRecord::Base
   scope :order_alphabetically, -> { where("due_by IS NULL OR due_by IS ''").order(content: :desc) }
   scope :order_due_by, ->         { where("due_by IS NOT NULL OR due_by <> ''").order(due_by: :asc) }
 
+  def self.due_in(minutes = 10.minutes)
+    end_datetime = DateTime.current + minutes
+    where(due_by: [DateTime.current..end_datetime])
+  end
+
   # TODO: Look into alias_method, odd behavior with complete? method
   def completed?
     complete?
   end
 
   def toggle_state!
-    self.complete = !completed?
+    self.complete = true
     self.save(validate: false)
     # NOTE: uncomment if you'd like to see an error message thrown when marking a todo item complete.
     # raise ActiveRecord::Rollback

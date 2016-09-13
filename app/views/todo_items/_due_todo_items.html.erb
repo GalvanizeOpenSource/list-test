@@ -1,0 +1,4 @@
+<li class="<%= completed_css_class(todo_item.completed?) %>">
+  <span><%= todo_item.content %></span>
+  <%= link_to_toggle_todo_item_state(todo_item, true) %>
+</li>

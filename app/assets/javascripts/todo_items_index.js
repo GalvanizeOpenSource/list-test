@@ -1,26 +1,31 @@
 $(document).ready(function(){
-  $('.toggle-state').click(function(e) {
-    e.preventDefault();
-
-    var ownerId, url;
-
-    $button = $(this);
-
-    ownerId = $button.data('owner-id');
-    url     = $button.data('url');
-
-    $.ajax({
-      url: url,
-      method: 'PUT',
-      dataType: 'json',
-      data: { todo_list_id: ownerId }
-    }).done(function() {
-      $button.closest('li').addClass('completed');
-      $button.replaceWith('Done!')
-    }).fail(function(jqXHR, textStatus, errorThrown) {
-      var json = jqXHR.responseJSON;
-      var flash = $('<div></div>').addClass('flash error').text(json.error_text);
-      $('body').prepend(flash);
-    });
-  })
+  var stateToggle = new StateToggle;
+  stateToggle.toggle();
 });
+
+// Recursive IIFE for polling incase server times out or something similar
+(function poll(){
+  setTimeout(function() {
+    console.log('triggered poll');
+    $.ajax({
+      url: '/api/due_items.json',
+      method: 'GET',
+      dataType: 'json',
+    }).done(function(res) {
+      var todoItems = res.todo_items;
+
+      if (todoItems.length > 0) {
+        var stateToggle, modal;
+
+        modal = new Modal;
+        modal.open();
+        stateToggle = new StateToggle;
+        stateToggle.toggle();
+      }
+
+      poll();
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+      poll();
+    });
+  }, 5000);
+})();

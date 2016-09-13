@@ -7,14 +7,10 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <%= render partial: 'layouts/partials/modal', locals: { todo_items: due_todo_items } %>
+  <%= render partial: 'layouts/partials/flashes' %>
 
-  <% flash.each do |type, message| %>
-  <div class="alert flash <%= type %>">
-    <%= message %>
-  </div>
-  <% end %>
-
-<%= yield %>
+  <%= yield %>
 
 </body>
 </html>
