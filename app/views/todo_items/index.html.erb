@@ -4,8 +4,6 @@
   <%= render collection: @todo_items, partial: 'todo_items', as: :todo_item %>
 </ul>
 
-<div class="add-item" data-list-id="1">
-    Add item
-</div>
-
-<p><%= link_to "New Todo Item", new_todo_list_todo_item_path %></p>
+<p>
+  <%= link_to "New Todo Item", new_todo_list_todo_item_path %>
+</p>
