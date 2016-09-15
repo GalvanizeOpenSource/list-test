@@ -1,17 +1,20 @@
 describe("TodoListIndex", function () {
   describe("Todo Item Modal", function () {
+    var modal = new Modal('#openModal');
+
     beforeEach(function () {
       loadFixtures("todo_list_index.html");
     });
 
-    it("should open the modal if Add Item is clicked", function() {
-      $('.add-item').trigger('click');
+    it("should add the css class when the modal is opened", function() {
+      modal.open();
       expect($('#openModal')).toHaveClass('show');
     });
 
-    it("should close the modal if X is clicked", function() {
+    it("should remove the css class when modal is closed", function() {
+      modal.open();
       $('#openModal').addClass('show');
-      $('.close').trigger('click');
+      modal.close();
       expect($('#openModal')).not.toHaveClass('show');
     });
   });
