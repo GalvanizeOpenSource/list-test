@@ -2,10 +2,7 @@ require 'spec_helper'
 
 describe "todo_lists/new" do
   before(:each) do
-    assign(:todo_list, stub_model(TodoList,
-      :title => "MyString",
-      :description => "MyText"
-    ).as_new_record)
+    assign(:todo_list, TodoList.new(title: "MyString", description: "MyText"))
   end
 
   it "renders new todo_list form" do

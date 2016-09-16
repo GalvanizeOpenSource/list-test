@@ -1,0 +1,7 @@
+<li class="<%= completed_css_class(todo_item.completed?) %>" id="<%= dom_id(todo_item)%>">
+  <span><%= todo_item.content %></span>
+  <span><%= display_datetime_local(todo_item.due_by) %></span>
+  <%= link_to_toggle_todo_item_state(todo_item) %>
+  <%= link_to "Edit", edit_todo_list_todo_item_path(todo_item) %>
+</li>
+

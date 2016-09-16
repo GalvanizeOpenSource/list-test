@@ -1,0 +1,14 @@
+<div id="dueModal" class="modalDialog">
+  <div>
+    <a href="#close" title="Close" class="close">X</a>
+    <h2>Todo Items Due</h2>
+    <p>Due in 10 minutes:</p>
+    <ul>
+      <%= render collection: todo_items, partial: 'todo_items/due_todo_items', as: :todo_item %>
+    </ul>
+
+    <div class="button-group">
+      <%= link_to 'Dismiss', '#', class: 'close' %>
+    </div>
+  </div>
+</div>

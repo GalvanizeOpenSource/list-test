@@ -38,7 +38,7 @@
   <div><a href="#close" title="Close" class="close">X</a>
         <h2>Add a new todo item!</h2>
         <%= label_tag "content" %>
-        <%= text_field_tag "content" %>
-        <%= button_tag "Save" %>
+        <%= text_field_tag "content", '', data: { url: api_todo_items_path } %>
+        <%= button_tag "Save", class: 'submit-button' %>
   </div>
 </div>
