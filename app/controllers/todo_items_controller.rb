@@ -67,6 +67,6 @@ class TodoItemsController < ApplicationController
   end
 
   def todo_item_deletion
-    Services::TodoItemDeletion.new(@todo_list, @todo_item)
+    @todo_item_deletion ||= Services::TodoItemDeletion.new(@todo_list, @todo_item)
   end
 end
