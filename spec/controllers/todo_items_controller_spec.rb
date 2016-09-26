@@ -79,4 +79,28 @@ describe TodoItemsController do
       expect(response).to redirect_to(new_todo_list_path)
     end
   end
+
+  #Tests for new delete functionality
+  describe "#delete" do
+    it "destroys the requested todo_item" do
+      expect {
+        delete :destroy, {:todo_list_id => todo_list.id, :id => todo_item.id}
+      }.to change(TodoItem, :count).by(-1)
+    end
+
+    it "redirects to the root route after deleting" do
+      # todo_list = TodoList.create!
+      delete :destroy, {:todo_list_id => todo_list.id, :id => todo_item.id }
+      response.should redirect_to(root_path)
+    end
+    it "also deletes the todo_list if the todo_item being deleted is the only todo_item" do
+      expect {
+        delete :destroy, {:todo_list_id => todo_list.id, :id => todo_item.id}
+      }.to change(TodoList, :count).by(-1)
+    end
+    it 'should redirect to todo_list_todo_items_path if todo_list is not found' do
+      delete :destroy, {:todo_list_id => todo_list.id + 1, :id => todo_item.id }
+      expect(response).to redirect_to(todo_list_todo_items_path)
+    end
+  end
 end

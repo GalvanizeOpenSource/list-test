@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe "todo_items/index.html.erb" do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe "todo_items/index" do
+  # pending "add some examples to (or delete) #{__FILE__}"
 end
