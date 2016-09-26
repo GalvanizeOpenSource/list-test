@@ -79,4 +79,16 @@ describe TodoItemsController do
       expect(response).to redirect_to(new_todo_list_path)
     end
   end
+
+  describe "#destroy" do
+    it 'should redirect to the root path' do
+      delete :destroy, todo_list_id: todo_list.id, id: todo_item.id
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'should redirect to the new_todo_list_path if todo_list is not found' do
+      delete :destroy, todo_list_id: todo_list.id + 1, id: todo_item.id
+      expect(response).to redirect_to(new_todo_list_path)
+    end
+  end
 end
