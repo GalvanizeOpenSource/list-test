@@ -4,6 +4,7 @@ describe TodoListsController do
   let(:valid_attributes) { { "title" => "MyString" , "description" => "My description"} }
 
   let(:valid_session) { {} }
+  render_views
 
   describe "GET index" do
     it "assigns all todo_lists as @todo_lists" do
@@ -58,12 +59,14 @@ describe TodoListsController do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved todo_list as @todo_list" do
-        TodoList.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(TodoList).to receive(:save).and_return(:false)
+        # TodoList.any_instance.stub(:save).and_return(false)
         post :create, {:todo_list => { "title" => "invalid value" }}, valid_session
         assigns(:todo_list).should be_a_new(TodoList)
       end
 
       it "re-renders the 'new' template" do
+        # allow_any_instance_of(TodoList).to receive(:save).and_return(:false)
         TodoList.any_instance.stub(:save).and_return(false)
         post :create, {:todo_list => { "title" => "invalid value" }}, valid_session
         response.should render_template("new")
@@ -75,7 +78,8 @@ describe TodoListsController do
     describe "with valid params" do
       it "updates the requested todo_list" do
         todo_list = TodoList.create! valid_attributes
-        TodoList.any_instance.should_receive(:update).with({ "title" => "MyString" })
+        allow_any_instance_of(TodoList).to receive(:update).with({ "title" => "MyString" })
+        # TodoList.any_instance.should_receive(:update).with({ "title" => "MyString" })
         put :update, {:id => todo_list.to_param, :todo_list => { "title" => "MyString" }}, valid_session
       end
 
@@ -95,13 +99,15 @@ describe TodoListsController do
     describe "with invalid params" do
       it "assigns the todo_list as @todo_list" do
         todo_list = TodoList.create! valid_attributes
-        TodoList.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(TodoList).to receive(:save).and_return(:false)
+        # TodoList.any_instance.stub(:save).and_return(false)
         put :update, {:id => todo_list.to_param, :todo_list => { "title" => "invalid value" }}, valid_session
         assigns(:todo_list).should eq(todo_list)
       end
 
       it "re-renders the 'edit' template" do
         todo_list = TodoList.create! valid_attributes
+        # allow_any_instance_of(TodoList).to receive(:save).and_return(:false)
         TodoList.any_instance.stub(:save).and_return(false)
         put :update, {:id => todo_list.to_param, :todo_list => { "title" => "invalid value" }}, valid_session
         response.should render_template("edit")
