@@ -1,7 +1,7 @@
 class TodoItemsController < ApplicationController
   def index
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_list = TodoList.find(params[:todo_list_id])
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
     end
@@ -9,7 +9,7 @@ class TodoItemsController < ApplicationController
 
   def new
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_list = TodoList.find(params[:todo_list_id])
       @todo_item = @todo_list.todo_items.new
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
@@ -34,7 +34,7 @@ class TodoItemsController < ApplicationController
 
   def edit
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_list = TodoList.find(params[:todo_list_id])
       @todo_item = @todo_list.todo_items.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
@@ -43,7 +43,7 @@ class TodoItemsController < ApplicationController
 
   def update
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_list = TodoList.find(params[:todo_list_id])
       @todo_item = @todo_list.todo_items.find(params[:id])
 
       if @todo_item.update_attributes(todo_item_params)
@@ -58,6 +58,22 @@ class TodoItemsController < ApplicationController
     end
   end
 
+  def destroy
+    begin
+      @todo_list = TodoList.find(params[:todo_list_id])
+      @todo_list.todo_items.destroy(params[:id])
+      if @todo_list.todo_items.any?
+        flash[:success] = "Your todo item was successfully removed."
+      else
+        @todo_list.destroy()
+        flash[:success] = "The last todo item was successfully removed and your todo list was deleted."
+      end
+      redirect_to todo_lists_path
+    rescue
+      flash[:error] = "Sorry, there was a problem deleting the todo item"
+    end
+  end
+  
   def url_options
     {todo_list_id: params[:todo_list_id]}.merge(super)
   end
