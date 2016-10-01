@@ -79,4 +79,31 @@ describe TodoItemsController do
       expect(response).to redirect_to(new_todo_list_path)
     end
   end
+
+  describe "#destroy" do
+    it 'should redirect to the root' do
+      todo_item_del = TodoItem.create(content: "Get milk and eggs")
+      todo_list.todo_items << todo_item_del
+      delete :destroy, todo_list_id: todo_list.id, id: todo_item_del.id
+      expect(response).to redirect_to(todo_lists_path)
+    end
+    
+    it "destroys the requested todo_item" do
+      todo_item_del = TodoItem.create(content: "Get milk and eggs")
+      todo_list.todo_items << todo_item_del
+      expect {
+        delete :destroy, todo_list_id: todo_list.id, id: todo_item_del.id
+      }.to change(TodoItem, :count).by(-1)
+    end
+
+    it "destroys the list if no more items are left" do
+      todo_item_del = TodoItem.create(content: "Get milk and eggs")
+      todo_list.todo_items.destroy_all()
+      todo_list.todo_items << todo_item_del
+      expect {
+        delete :destroy, todo_list_id: todo_list.id, id: todo_item_del.id
+      }.to change(TodoList, :count).by(-1)
+      
+    end
+  end
 end
