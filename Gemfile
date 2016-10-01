@@ -29,6 +29,7 @@ group :development, :test do
   gem 'jasmine'
   gem 'jasmine-jquery-rails'
   gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-activemodel-mocks'
 end
 
 group :test do
