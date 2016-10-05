@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe TodoItemsController do
-  let(:todo_item) { TodoItem.create(content: "Get milk and eggs") }
-  let(:todo_list) { TodoList.create(title: "My Title", description: "This is my test list") }
+  render_views
+
+  let(:todo_item) { TodoItem.create!(content: "Get milk and eggs", due_date_valid: true) }
+  let(:todo_list) { TodoList.create!(title: "My Title", description: "This is my test list") }
 
   before() do
     todo_list.todo_items << todo_item
@@ -65,6 +67,22 @@ describe TodoItemsController do
       put :update, todo_list_id: todo_list.id, id: todo_item.id, todo_item: {content: "New content"}
       expect(todo_item.reload.content).to eq "New content"
     end
+
+    it 'should update the specified item with specified due_date if valid' do
+      date = DateTime.parse('2016/1/1 12:00')
+      cookies['timeZoneOffset'] = '-5'
+
+      put :update, todo_list_id: todo_list.id, id: todo_item.id, todo_item: {content: "New content", due_date: date}
+      expect(todo_item.reload.due_date.to_formatted_s(:db)).to eq('2016-01-01 17:00:00')
+    end
+
+    it 'should not update the specified item with specified due_date if invalid' do
+      date = 'abc'
+      cookies['timeZoneOffset'] = '-5'
+
+      put :update, todo_list_id: todo_list.id, id: todo_item.id, todo_item: {content: "New content", due_date: date}
+      expect(todo_item.reload.due_date).to be_nil
+    end
   end
 
   describe "#create" do
@@ -77,6 +95,24 @@ describe TodoItemsController do
     it 'should redirect to new_todo_list_path if todo_list is not found' do
       post :create, todo_list_id: todo_list.id + 1, todo_item: { content: "This is my new item" }
       expect(response).to redirect_to(new_todo_list_path)
+    end
+
+    it 'should create a new todo item for the specified list with specified due_date if valid' do
+      date = DateTime.parse('2016/1/1 12:00')
+      cookies['timeZoneOffset'] = '-5'
+
+      post :create, todo_list_id: todo_list.id, todo_item: { content: "This is my new item", due_date: date }
+      expect(todo_list.todo_items.length).to eq(2)
+      expect(todo_list.todo_items[1].due_date.to_formatted_s(:db)).to eq('2016-01-01 17:00:00')
+    end
+
+    it 'should not create a new todo item for the specified list with specified due_date if invalid' do
+      date = 'abc'
+      cookies['timeZoneOffset'] = '-5'
+
+      post :create, todo_list_id: todo_list.id, todo_item: { content: "This is my new item", due_date: date }
+      expect(todo_list.todo_items.length).to eq(1)
+      expect(response).to render_template(:new)
     end
   end
 end

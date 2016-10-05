@@ -1,13 +1,40 @@
 <h1><%= @todo_list.title %></h1>
 
 <ul class="todo_items">
-  <% @todo_list.todo_items.each do |todo_item| %>
-  <li id="<%= dom_id(todo_item)%>"><%= todo_item.content %>
-    <%= link_to "Edit", edit_todo_list_todo_item_path(todo_item) %>
-  </li>
+  <% ordered(@todo_list.todo_items).each do |todo_item| %>
+    <% if todo_item.done %>
+      <li id="<%= dom_id(todo_item)%>" class='todo-done'><%= todo_item.content %>
+        <%= link_to "Edit", '#' %>
+        <% unless todo_item.due_date.nil? %>
+          <%= content_tag('div', 'Due Date', class: 'due_date', style: 'display: inline-block', :data => { due_date: todo_item.due_date.try(:to_formatted_s, :long) }) %>
+        <% end %>
+        <%= link_to "Done!", '#' %>
+      </li>
+    <% else %>
+  	  <li id="<%= dom_id(todo_item)%>"><%= todo_item.content %>
+        <%= link_to "Edit", edit_todo_list_todo_item_path(todo_item) %>
+        <% unless todo_item.due_date.nil? %>
+          <%= content_tag('div', 'Due Date', class: 'due_date', style: 'display: inline-block', :data => { due_date: todo_item.due_date.try(:to_formatted_s, :long) }) %>
+        <% end %>
+        <%= tag('div', class: 'clock', style: 'display: inline-block', :data => { id: todo_item.id, due_date: todo_item.due_date.try(:to_formatted_s, :long) }) %>
+        <%= link_to "Done", todo_list_update_todo_item_path(todo_item, todo_item: { done: true }), method: :put %>
+      </li>
+    <% end %>
   <% end %>
 </ul>
 
 <p>
   <%= link_to "New Todo Item", new_todo_list_todo_item_path %>
 </p>
+
+<% @todo_list.todo_items.pending.has_due_date.each do |todo_item| %>
+  <div id="openDueDateModal" class="modalDueDateDialog" data-modal-id="<%= todo_item.id %>" data-ajax-path="<%= todo_list_update_todo_item_path(todo_item) %>">
+    <div><a href="#close" title="Close" class="close">X</a>
+      <h2>Todo Item Due</h2>
+      <h3>Due in 10 minutes:</h3>
+      <%= todo_item.content %>
+      <%= button_tag "Done", id: :done %>
+      <%= button_tag "Dismiss", id: :dismiss %>
+    </div>
+  </div>
+<% end %>
