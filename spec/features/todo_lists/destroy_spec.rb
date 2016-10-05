@@ -8,6 +8,9 @@ describe "Deleting todo lists" do
     within "#todo_list_#{todo_list.id}" do
       click_link "Destroy"
     end
+    # I feel like this should really work
+    # sleep 1
+    # page.driver.browser.switch_to.alert.accept
     expect(page).to_not have_content(todo_list.title)
     expect(TodoList.count).to eq(0)
   end
