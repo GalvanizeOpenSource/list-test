@@ -1,7 +1,7 @@
 class TodoItemsController < ApplicationController
   def index
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_list = TodoList.find(params[:todo_list_id])
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
     end
@@ -9,7 +9,7 @@ class TodoItemsController < ApplicationController
 
   def new
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_list = TodoList.find(params[:todo_list_id])
       @todo_item = @todo_list.todo_items.new
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
@@ -34,7 +34,7 @@ class TodoItemsController < ApplicationController
 
   def edit
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_list = TodoList.find(params[:todo_list_id])
       @todo_item = @todo_list.todo_items.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
@@ -43,7 +43,7 @@ class TodoItemsController < ApplicationController
 
   def update
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_list = TodoList.find(params[:todo_list_id])
       @todo_item = @todo_list.todo_items.find(params[:id])
 
       if @todo_item.update_attributes(todo_item_params)
@@ -55,6 +55,24 @@ class TodoItemsController < ApplicationController
       end
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
+    end
+  end
+
+  def destroy
+    begin
+      @todo_list = TodoList.find(params[:todo_list_id])
+      @todo_item = @todo_list.todo_items.find(params[:id])
+      @todo_item.destroy
+      if @todo_list.todo_items.length == 0
+        @todo_list.destroy
+        flash[:success] = "The last todo item was successfully removed and your todo list was deleted."
+      else
+        flash[:success] = "Your todo item was successfully removed."
+      end
+      render :js => "window.location = '#{root_path}'"
+    rescue
+      flash[:error] = "Sorry, there was a problem deleting the todo item."
+      render :js => "window.location = '#{todo_list_todo_items_path}'"
     end
   end
 

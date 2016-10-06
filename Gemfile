@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 
 gem 'rails', '4.2.4'
@@ -34,4 +34,7 @@ end
 group :test do
   gem 'capybara', '~> 2.1.0'
   gem 'shoulda-matchers', '~> 3.1.1'
+  gem 'rspec-activemodel-mocks'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end

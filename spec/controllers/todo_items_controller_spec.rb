@@ -79,4 +79,37 @@ describe TodoItemsController do
       expect(response).to redirect_to(new_todo_list_path)
     end
   end
+
+  describe "#delete" do
+    it 'should delete the specific item' do
+      expect{
+        delete :destroy, :todo_list_id => todo_list.id, :id => todo_list.todo_items[0].id
+      }.to change(TodoItem, :count).by(-1)
+    end
+
+    it 'should redirect to the root url' do
+      delete :destroy, :todo_list_id => todo_list.id, :id => todo_list.todo_items[0].id
+      response.body.should include("window.location = '/'")
+    end
+
+    it 'should have a deleted flash message' do
+      new_todo_list = TodoList.create(title: "My New List", description: "This is my test list")
+      new_todo_list.todo_items.push(TodoItem.create(content: "Get on up"))
+      new_todo_list.todo_items.push(TodoItem.create(content: "Also get funky"))
+
+      delete :destroy, :todo_list_id => new_todo_list.id, :id => new_todo_list.todo_items[0].id
+      expect(flash[:success]).to eq "Your todo item was successfully removed."
+    end
+
+    it 'should have a special flash message when deleting the last item in the list' do
+      delete :destroy, :todo_list_id => todo_list.id, :id => todo_list.todo_items[0].id
+      expect(flash[:success]).to eq "The last todo item was successfully removed and your todo list was deleted."
+    end
+
+    it 'should have a special flash message and redirect to the todo items path if deleting throws an error' do
+      delete :destroy, :todo_list_id => 12345, :id => 67890
+      response.body.should include("window.location = '/todo_lists/12345/todo_items'")
+      expect(flash[:error]).to eq "Sorry, there was a problem deleting the todo item."
+    end
+  end
 end
