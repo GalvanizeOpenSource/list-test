@@ -69,10 +69,11 @@ class TodoItemsController < ApplicationController
       else
         flash[:success] = "Your todo item was successfully removed."
       end
-    rescue ActiveRecord::RecordNotFound
-      redirect_to new_todo_list_path
+      render :js => "window.location = '#{root_path}'"
+    rescue
+      flash[:error] = "Sorry, there was a problem deleting the todo item."
+      render :js => "window.location = '#{todo_list_todo_items_path}'"
     end
-    render :js => "window.location = '#{root_path}'"
   end
 
   def url_options

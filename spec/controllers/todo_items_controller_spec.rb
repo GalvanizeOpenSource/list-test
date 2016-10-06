@@ -105,5 +105,11 @@ describe TodoItemsController do
       delete :destroy, :todo_list_id => todo_list.id, :id => todo_list.todo_items[0].id
       expect(flash[:success]).to eq "The last todo item was successfully removed and your todo list was deleted."
     end
+
+    it 'should have a special flash message and redirect to the todo items path if deleting throws an error' do
+      delete :destroy, :todo_list_id => 12345, :id => 67890
+      response.body.should include("window.location = '/todo_lists/12345/todo_items'")
+      expect(flash[:error]).to eq "Sorry, there was a problem deleting the todo item."
+    end
   end
 end
