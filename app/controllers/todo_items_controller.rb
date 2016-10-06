@@ -63,10 +63,11 @@ class TodoItemsController < ApplicationController
       @todo_list = TodoList.find(params[:todo_list_id])
       @todo_item = @todo_list.todo_items.find(params[:id])
       @todo_item.destroy
+      flash[:success] = "Your todo item was successfully removed."
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
     end
-    render :nothing => true
+    render :js => "window.location = '#{root_path}'"
   end
 
   def url_options
