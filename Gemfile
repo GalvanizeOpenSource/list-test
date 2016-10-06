@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 
 gem 'rails', '4.2.4'
@@ -11,8 +11,6 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
-
-
 
 
 group :development, :test do
@@ -28,10 +26,11 @@ end
 group :development, :test do
   gem 'jasmine'
   gem 'jasmine-jquery-rails'
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-rails', '~> 3.4'
+  gem 'rspec-activemodel-mocks'
 end
 
 group :test do
-  gem 'capybara', '~> 2.1.0'
+  gem 'capybara', '~> 2.2'
   gem 'shoulda-matchers', '~> 3.1.1'
 end
