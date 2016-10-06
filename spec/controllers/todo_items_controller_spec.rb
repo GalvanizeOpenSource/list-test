@@ -79,4 +79,12 @@ describe TodoItemsController do
       expect(response).to redirect_to(new_todo_list_path)
     end
   end
+
+  describe "#delete" do
+    it 'should delete the specific item' do
+      expect{
+        delete :destroy, :todo_list_id => todo_list.id, :id => todo_list.todo_items[0].id
+      }.to change(TodoItem, :count).by(-1)
+    end
+  end
 end

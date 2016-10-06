@@ -58,6 +58,17 @@ class TodoItemsController < ApplicationController
     end
   end
 
+  def destroy
+    begin
+      @todo_list = TodoList.find(params[:todo_list_id])
+      @todo_item = @todo_list.todo_items.find(params[:id])
+      @todo_item.destroy
+    rescue ActiveRecord::RecordNotFound
+      redirect_to new_todo_list_path
+    end
+    render :nothing => true
+  end
+
   def url_options
     {todo_list_id: params[:todo_list_id]}.merge(super)
   end
