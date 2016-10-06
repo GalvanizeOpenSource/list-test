@@ -63,7 +63,12 @@ class TodoItemsController < ApplicationController
       @todo_list = TodoList.find(params[:todo_list_id])
       @todo_item = @todo_list.todo_items.find(params[:id])
       @todo_item.destroy
-      flash[:success] = "Your todo item was successfully removed."
+      if @todo_list.todo_items.length == 0
+        @todo_list.destroy
+        flash[:success] = "The last todo item was successfully removed and your todo list was deleted."
+      else
+        flash[:success] = "Your todo item was successfully removed."
+      end
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
     end

@@ -100,5 +100,10 @@ describe TodoItemsController do
       delete :destroy, :todo_list_id => new_todo_list.id, :id => new_todo_list.todo_items[0].id
       expect(flash[:success]).to eq "Your todo item was successfully removed."
     end
+
+    it 'should have a special flash message when deleting the last item in the list' do
+      delete :destroy, :todo_list_id => todo_list.id, :id => todo_list.todo_items[0].id
+      expect(flash[:success]).to eq "The last todo item was successfully removed and your todo list was deleted."
+    end
   end
 end
