@@ -22,7 +22,7 @@
           <%= link_to 'Edit', edit_todo_list_path(todo_list) %>
           <%= link_to 'Destroy', todo_list, method: :delete, data: {confirm: 'Are you sure?'} %>
         </td>
-        <td class="add-item" data-list-id="<%= todo_list.id %>">
+        <%= tag('td', class: 'add-item', data: { :'list-id' => todo_list.id, :'ajax-path' => todo_list_create_todo_item_path(todo_list) }) %>
           Add item
         </td>
       </tr>
@@ -39,6 +39,10 @@
         <h2>Add a new todo item!</h2>
         <%= label_tag "content" %>
         <%= text_field_tag "content" %>
+        <br>
+        <%= label_tag "due_date" %>
+        <%= text_field_tag "due_date" %>
+        <br>
         <%= button_tag "Save" %>
   </div>
 </div>

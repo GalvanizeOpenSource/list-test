@@ -40,7 +40,7 @@ td.add-item {
 }
 
 
-.modalDialog {
+.modalDialog, .modalDueDateDialog {
     position: fixed;
     font-family: Arial, Helvetica, sans-serif;
     top: 0;
@@ -59,7 +59,7 @@ td.add-item {
     opacity:1;
     pointer-events: auto;
 }
-.modalDialog > div {
+.modalDialog, .modalDueDateDialog > div {
     width: 400px;
     position: relative;
     margin: 10% auto;
@@ -90,4 +90,8 @@ td.add-item {
 }
 .close:hover {
     background: #00d9ff;
+}
+
+.todo-done {
+    background-color:#E0EEE0
 }

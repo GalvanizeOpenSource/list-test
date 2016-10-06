@@ -2,6 +2,10 @@ Rails.application.routes.draw do
 
   resources :todo_lists do
     resources :todo_items
+    put 'update_todo_item/:id(.:format)', :to => 'todo_items#update',
+                                          :as => :update_todo_item
+    post 'create_todo_item', :to => 'todo_items#create',
+                             :as => :create_todo_item
   end
   root 'todo_lists#index'
   # The priority is based upon order of creation: first created -> highest priority.

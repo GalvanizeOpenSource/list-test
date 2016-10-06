@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Editing todo lists" do
-  let!(:todo_list) { TodoList.create(title: "Groceries", description: "Grocery List") }
+  let!(:todo_list) { TodoList.create!(title: "Groceries", description: "Grocery List") }
   def update_todo_list(options={})
     options[:title] ||= "My todo list"
     options[:description] ||= "This is my todo list."
@@ -34,7 +34,7 @@ describe "Editing todo lists" do
     visit "/todo_lists"
 
     within "#todo_list_#{todo_list.id}" do
-      find('.add-item', text: 'Add item').click
+      find('.add-item').click
     end
 
     expect(page).to have_content("Add a new todo item!")
