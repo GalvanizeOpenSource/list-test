@@ -79,4 +79,18 @@ describe TodoItemsController do
       expect(response).to redirect_to(new_todo_list_path)
     end
   end
+
+  describe "#destroy" do
+    it "destroys the requested todo_item" do
+      expect {
+        delete :destroy, {:id => todo_item.to_param, :todo_list_id => todo_list.to_param}
+      }.to change(TodoItem, :count).by(-1)
+    end
+
+    it "redirects to the todo_lists list" do
+      delete :destroy, todo_list_id: todo_list.id, id: todo_item.id
+      expect(response).should redirect_to(todo_lists_url)
+    end
+  end
+
 end

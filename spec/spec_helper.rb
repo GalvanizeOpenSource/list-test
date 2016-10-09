@@ -26,6 +26,14 @@ RSpec.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
 
+  # Added this to eliminate deprecation errors involved the 'should' syntax
+  config.mock_with :rspec do |c|
+    c.syntax = [:should, :expect]
+  end
+  config.expect_with :rspec do |c|
+    c.syntax = [:should, :expect]
+  end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
@@ -44,6 +52,8 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  config.raise_errors_for_deprecations!
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
