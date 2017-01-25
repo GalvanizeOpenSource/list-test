@@ -1,7 +1,7 @@
 class TodoItemsController < ApplicationController
   def index
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_list = TodoList.find(params[:todo_list_id])
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
     end
@@ -9,7 +9,7 @@ class TodoItemsController < ApplicationController
 
   def new
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_list = TodoList.find(params[:todo_list_id])
       @todo_item = @todo_list.todo_items.new
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
@@ -34,7 +34,7 @@ class TodoItemsController < ApplicationController
 
   def edit
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_list = TodoList.find(params[:todo_list_id])
       @todo_item = @todo_list.todo_items.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
@@ -43,7 +43,7 @@ class TodoItemsController < ApplicationController
 
   def update
     begin
-      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_list = TodoList.find(params[:todo_list_id])
       @todo_item = @todo_list.todo_items.find(params[:id])
 
       if @todo_item.update_attributes(todo_item_params)
@@ -58,6 +58,23 @@ class TodoItemsController < ApplicationController
     end
   end
 
+  def mark_done
+    begin
+      @todo_list = TodoList.find(params[:todo_list_id])
+      @todo_item = @todo_list.todo_items.find(params[:todo_item_id])
+
+      if @todo_item.update_attributes(done: true)
+          flash[:success] = "Todo item has been marked done."
+      else
+          flash[:error] = "Sorry, we could not mark your todo item as done."
+      end
+
+      redirect_to todo_list_todo_items_path
+    rescue ActiveRecord::RecordNotFound
+      redirect_to new_todo_list_path
+    end
+  end
+
   def url_options
     {todo_list_id: params[:todo_list_id]}.merge(super)
   end
@@ -65,7 +82,7 @@ class TodoItemsController < ApplicationController
   private
 
   def todo_item_params
-    params[:todo_item].permit(:content)
+    params[:todo_item].permit(:content, :due_date)
   end
 
 end

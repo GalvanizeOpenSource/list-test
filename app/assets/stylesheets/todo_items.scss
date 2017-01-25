@@ -1,3 +1,18 @@
 // Place all the styles related to the todo_items controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+/**
+ * The presentation here was really getting on my nerves... =P
+ **/
+div.form-field {
+  padding: 1em 0;
+
+  input {
+    padding: 0.25em;
+  }
+}
+
+.item-done {
+  background-color: #E0EEE0;
+}

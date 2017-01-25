@@ -34,4 +34,25 @@ describe "Viewing todo items" do
       expect(page).to have_content("Eggs")
     end
   end
+
+  it "displayes due date for items that have one" do
+    todo_list.todo_items.create(content: "Project", due_date: "01/02/2017 13:00")
+
+    visit_todo_list(todo_list)
+
+    within('ul.todo_items') do
+      expect(page).to have_content("2017-02-01 01:00PM")
+    end
+  end
+
+  it "displays Done! indicator for items marked done" do
+    todo_list.todo_items.create(content: "Project", due_date: "01/02/2017 13:00", done: true)
+
+    visit_todo_list(todo_list)
+
+    within('ul.todo_items') do
+      expect(page).to have_content("Done!")
+    end
+  end
+
 end
