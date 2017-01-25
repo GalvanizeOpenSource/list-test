@@ -2,6 +2,9 @@ class TodoItemsController < ApplicationController
   def index
     begin
       @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      if @todo_list.blank?
+        redirect_to new_todo_list_path
+      end
     rescue ActiveRecord::RecordNotFound
       redirect_to new_todo_list_path
     end
@@ -41,6 +44,27 @@ class TodoItemsController < ApplicationController
     end
   end
 
+  def destroy
+    begin
+      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      @todo_item = @todo_list.todo_items.find(params[:id])
+      @todo_item.destroy
+      if @todo_item.destroy && @todo_list.todo_items.blank?
+        flash[:deleted] = "The last todo item was successfully removed and your todo list was deleted."
+        @todo_list.destroy
+        redirect_to root_path
+      elsif @todo_item.destroy
+        flash[:deleted] = "item destoryed."
+        redirect_to todo_list_todo_items_path
+      else
+        flash[:error] = "There was a problem deleting that todo list item."
+        redirect_to new_todo_list_path
+      end
+    rescue ActiveRecord::RecordNotFound
+      redirect_to new_todo_list_path
+    end
+  end
+
   def update
     begin
       @todo_list = TodoList.find_by(id: params[:todo_list_id])
@@ -67,5 +91,4 @@ class TodoItemsController < ApplicationController
   def todo_item_params
     params[:todo_item].permit(:content)
   end
-
 end

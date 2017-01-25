@@ -2,17 +2,33 @@ class TodoListsController < ApplicationController
   before_action :set_todo_list, only: [:show, :edit, :update, :destroy]
 
   def index
-    @todo_lists = TodoList.all
+    begin
+      @todo_lists = TodoList.all
+    rescue ActiveRecord::RecordNotFound
+      redirect_to new_todo_list_path
+    end
   end
 
   def show
   end
 
   def new
-    @todo_list = TodoList.new
+    begin
+      @todo_list = TodoList.new
+    rescue ActiveRecord::RecordNotFound
+      redirect_to new_todo_list_path
+    end
   end
 
   def edit
+    begin
+      @todo_list = TodoList.find_by(id: params[:todo_list_id])
+      if @todo_list.blank?
+        redirect_to new_todo_list_path
+      end
+    rescue ActiveRecord::RecordNotFound
+      redirect_to new_todo_list_path
+    end
   end
 
   def create
@@ -50,11 +66,11 @@ class TodoListsController < ApplicationController
   end
 
   private
-    def set_todo_list
-      @todo_list = TodoList.find(params[:id])
-    end
+  def set_todo_list
+    @todo_list = TodoList.find(params[:id])
+  end
 
-    def todo_list_params
-      params.require(:todo_list).permit(:title, :description)
-    end
+  def todo_list_params
+    params.require(:todo_list).permit(:title, :description)
+  end
 end
