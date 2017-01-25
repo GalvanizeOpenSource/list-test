@@ -1,9 +1,16 @@
 <h1><%= @todo_list.title %></h1>
 
 <ul class="todo_items">
-  <% @todo_list.todo_items.each do |todo_item| %>
-  <li id="<%= dom_id(todo_item)%>"><%= todo_item.content %>
+  <% @todo_list.todo_items.order('due_date IS NULL, due_date, content').each do |todo_item| %>
+    <li id="<%= dom_id(todo_item)%>" class="<%= todo_item.done ? "item-done" : "" %>" data-due-time="<%= todo_item.due_date.to_i %>" data-content="<%= todo_item.content %>" data-item-id="<%= todo_item.id %>" data-list-id="<%= @todo_list.id %>">
+    <%= todo_item.content %>
+    - Due: <%= todo_item.due_date? ? todo_item.due_date.strftime("%Y-%m-%d %I:%M%p %Z") : "" %>
     <%= link_to "Edit", edit_todo_list_todo_item_path(todo_item) %>
+    <% if todo_item.done %>
+      Done!
+    <% else %>
+      <%= link_to "Mark Done", todo_list_todo_item_mark_done_path(todo_item) %>
+    <% end %>
   </li>
   <% end %>
 </ul>
@@ -11,3 +18,12 @@
 <p>
   <%= link_to "New Todo Item", new_todo_list_todo_item_path %>
 </p>
+
+<div id="reminderModal" class="modalDialog">
+  <div>
+    <h2>Todo Item Due</h2>
+    <p>Due in 10 minutes: <span id="reminderContent"><span></p>
+    <a id="reminderDone">Done</a>
+    <a href="#" id="reminderDismiss">Dismiss</a>
+  </div>
+</div>

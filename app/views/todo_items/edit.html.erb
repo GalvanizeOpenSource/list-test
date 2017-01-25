@@ -10,7 +10,15 @@
       </ul>
     </div>
     <% end %>
-  <%= form.label :content %>
-  <%= form.text_field :content %>
+  <div class="form-field">
+    <%= form.label :content %>
+    <%= form.text_field :content %>
+  </div>
+  <!-- Normally would prefer to use a better browser-supported Javascript based date select field,
+       though I think the HTML5 field will do fine for purposes of this project. -->
+  <div class="form-field">
+    <%= form.label :due_date %>
+    <%= form.datetime_local_field :due_date %>
+  </div>
   <%= form.submit "Save" %>
 <% end %>
