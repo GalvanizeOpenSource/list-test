@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'rspec/active_model/mocks'
 
 describe "todo_lists/show" do
   before(:each) do
