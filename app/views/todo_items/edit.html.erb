@@ -10,7 +10,16 @@
       </ul>
     </div>
     <% end %>
-  <%= form.label :content %>
-  <%= form.text_field :content %>
-  <%= form.submit "Save" %>
+
+    <%= form.label :content %>
+    <%= form.text_field :content %>
+
+    <br/><br/>
+
+    <%= form.label :due_at %>
+    <%= datetime_select(:todo_item, :due_at) %>
+
+    <br/><br/>
+
+    <%= form.submit "Save" %>
 <% end %>
